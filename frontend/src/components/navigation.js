@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 export const Navigation = (props) => {
   return (
@@ -53,7 +54,7 @@ export const Navigation = (props) => {
             </li>
             <li>
             <button className="login-button">
-              Login
+            <Link to="/login" className="login-button">Login</Link> {/* Use Link for navigation */}
             </button>
             </li>
           </ul>
