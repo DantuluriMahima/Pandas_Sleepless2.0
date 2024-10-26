@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { useState, useEffect } from "react";
 import { Navigation } from "./components/navigation";
 import { Header } from "./components/header";
@@ -21,8 +22,19 @@ const App = () => {
   useEffect(() => {
     setLandingPageData(JsonData);
   }, []);
+=======
+import logo from './logo.svg';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import AdminPage from './components/AdminPage.js';
+import Medicine from './components/Medicine.js';
+import PendingMedicines from './components/PendingMeds.js';
+import './App.css';
+import User from './components/User';
+>>>>>>> 485e5780312a90bdaa69adc649b448fa49cc7d92
 
   return (
+<<<<<<< HEAD
     <div>
       <Navigation />
       <Header data={landingPageData.Header} />
@@ -33,6 +45,16 @@ const App = () => {
       <Map data={landingPageData.Map} />
       <Footer data={landingPageData.Contact}/>
     </div>
+=======
+    <Router>
+      <Routes>
+        <Route path="/admin" element={<AdminPage />} />
+        <Route path="/admin/medicine" element={<Medicine />} />
+        <Route path="/admin/pendingmeds" element={<PendingMedicines />} />
+        <Route path="/Userpage" element={<User />} />
+      </Routes>
+    </Router>
+>>>>>>> 485e5780312a90bdaa69adc649b448fa49cc7d92
   );
 };
 

@@ -1,11 +1,24 @@
 const express = require('express');
+const bodyParser = require('body-parser');
+const cors = require('cors');
+const connectDB = require('./config/db'); 
+const path = require('path');
+require('dotenv').config();
+
 const app = express();
-const PORT = 5000;
+const port = process.env.PORT || 5000;
 
-app.get('/api', (req, res) => {
-  res.send('Hello from the Node server!');
-});
+app.use(cors());
+app.use(bodyParser.json());
 
-app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
+connectDB();
+
+const medicineRoute =require('./routes/medicinedb');
+const pendingRoute =require('./routes/pendingdb');
+
+app.use('/api/medicinedb', medicineRoute);
+app.use('/api/pendingdb', pendingRoute);
+
+app.listen(port, () => {
+  console.log(`Server running at http://localhost:${port}`);
 });
