@@ -1,7 +1,14 @@
 import logo from './logo.svg';
 import './App.css';
+import { useEffect } from 'react';
+import { renderUI } from './components/User'; // Import renderUI from user.js
+
 
 function App() {
+  useEffect(() => {
+    renderUI();
+  }, []); // Empty dependency array to call renderUI only once on mount
+
   return (
     <div className="App">
       <header className="App-header">
