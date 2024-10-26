@@ -533,6 +533,7 @@
 
   .mobile-nav-toggle {
     display: inline-block;
+    border: none;
     color: #D1DCE1;
     font-size: 28px;
     cursor: pointer;

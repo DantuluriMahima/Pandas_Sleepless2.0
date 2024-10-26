@@ -1,7 +1,12 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export const Navigation = (props) => {
+  const navigate = useNavigate();
+  const handleLoginClick = () => {
+    navigate("/register");
+  };
+
   return (
     <nav id="menu" className="navbar navbar-default navbar-fixed-top">
       
@@ -53,8 +58,8 @@ export const Navigation = (props) => {
               </a>
             </li>
             <li>
-            <button className="login-button">
-            <Link to="/login" className="login-button">Login</Link> {/* Use Link for navigation */}
+            <button className="login-button" onClick={handleLoginClick}>
+            Login
             </button>
             </li>
           </ul>

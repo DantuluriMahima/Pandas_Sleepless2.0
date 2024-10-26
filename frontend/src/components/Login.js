@@ -75,119 +75,122 @@ const Login = () => {
     }
   };
   return (
-      <section id="loginpage">
-    <div className="container-fluid" style={{
+    <section id="loginpage">
+  <div
+    className="container-fluid"
+    style={{
       background: "linear-gradient(rgba(14, 29, 52, 0.8), rgba(14, 29, 52, 0.6)), url('static/lib8.jpeg') center center",
       backgroundSize: 'cover',
       minHeight: '100vh',
       display: 'flex',
       justifyContent: 'center',
-      alignItems: 'center'
-    }}>
-      <div className='container'>
-      <div className="col-xl-9 col-lg-12 login-container">
-      <div className="row">
-          <div className="col-lg-7 img-box">
-            <img src="/static/adminpage/homebar.png" alt="" />
-          </div>
-          <div className="col-lg-5 no-padding">
-          <a href="/"className="text-light d-flex align-items-center justify-content-end" style={{ textDecoration: 'none', position: 'absolute', top: '20px', right: '40px', fontFamily: 'Roboto, sans-serif'}}>
-            <i class="bi bi-box-arrow-in-left">Back to Home</i></a>
-              
+      alignItems: 'center',
+    }}
+  >
+    <div className='container'>
+      <div className="row justify-content-center">
+        <div className="col-lg-5 no-padding">
+          <div className="register-card">
             <div className="card-body">
-            <h1 className="card-title text-center">Login</h1>
+              {/* Align Back to Home link here */}
+              <a href="/"
+                style={{
+                    textDecoration: 'none',
+                    fontFamily: 'Roboto, sans-serif',
+                    marginBottom: '20px', // Add margin to separate from the card title
+                    color: 'black', // Set font color to black
+                  }} // Add margin to separate from the card title
+                
+              >
+                <i className="bi bi-box-arrow-in-left me-2"/> {/* Added margin to the icon */}
+                Back to Home
+              </a>
+              
+              <h2 className="card-title text-center">LOGIN</h2>
               <ul className="nav nav-tabs" id="loginTab" role="tablist">
                 <li className="nav-item">
-                  <a
-                    className={`nav-link ${userType === 'student' ? 'active' : ''}`}
-                    onClick={() => setUserType('student')}
-                    role="tab"
-                  >
+                  <a className={`nav-link ${userType === 'student' ? 'active' : ''}`} onClick={() => setUserType('student')} role="tab">
                     Student
                   </a>
                 </li>
                 <li className="nav-item">
-                  <a
-                    className={`nav-link ${userType === 'admin' ? 'active' : ''}`}
-                    onClick={() => setUserType('admin')}
-                    role="tab"
-                  >
+                  <a className={`nav-link ${userType === 'admin' ? 'active' : ''}`} onClick={() => setUserType('admin')} role="tab">
                     Admin
                   </a>
                 </li>
               </ul>
               <div className="tab-content">
                 <div className={`tab-pane ${userType === 'student' ? 'active' : ''}`} role="tabpanel">
-                <form onSubmit={handleSubmit}>
-                        <div className="form-group row no-margin">
-                          <label htmlFor="roll">Roll Number</label>
-                          <input
-                            type="text"
-                            className="form-control"
-                            id="roll"
-                            name="roll"
-                            value={formData.roll}
-                            onChange={handleChange}
-                            required
-                          />
-                        </div>
-                        <div className="form-group row no-margin">
-                          <label htmlFor="password">Password</label>
-                          <input
-                            type="password"
-                            className="form-control"
-                            id="password"
-                            name="password"
-                            value={formData.password}
-                            onChange={handleChange}
-                            required
-                          />
-                        </div>
-                        <button type="submit" className="btn btn-primary btn-block" style={{ marginTop: '20px' }}>
-                          Login as Student
-                        </button>
-                      </form>
+                  <form onSubmit={handleSubmit}>
+                    <div className="form-group row no-margin">
+                      <label htmlFor="roll">Roll Number</label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        id="roll"
+                        name="roll"
+                        value={formData.roll}
+                        onChange={handleChange}
+                        required
+                      />
+                    </div>
+                    <div className="form-group row no-margin">
+                      <label htmlFor="password">Password</label>
+                      <input
+                        type="password"
+                        className="form-control"
+                        id="password"
+                        name="password"
+                        value={formData.password}
+                        onChange={handleChange}
+                        required
+                      />
+                    </div>
+                    <button type="submit" className="btn btn-primary btn-block" style={{ marginTop: '20px' }}>
+                      Login as Student
+                    </button>
+                  </form>
                 </div>
                 <div className={`tab-pane ${userType === 'admin' ? 'active' : ''}`} role="tabpanel">
-                <form onSubmit={handleLoginClick}>
-                        <div className="form-group row no-margin">
-                          <label htmlFor="roll">Faculty ID</label>
-                          <input
-                            type="text"
-                            className="form-control"
-                            id="roll"
-                            name="roll"
-                            value={formData.roll}
-                            onChange={handleChange}
-                            required
-                          />
-                        </div>
-                        <div className="form-group row no-margin">
-                          <label htmlFor="password">Password</label>
-                          <input
-                            type="password"
-                            className="form-control"
-                            id="password"
-                            name="password"
-                            value={formData.password}
-                            onChange={handleChange}
-                            required
-                          />
-                        </div>
-                        <button type="submit" className="btn btn-primary btn-block" style={{ marginTop: '20px' }}>
-                          Login as Admin
-                        </button>
-                      </form>
+                  <form onSubmit={handleLoginClick}>
+                    <div className="form-group row no-margin">
+                      <label htmlFor="roll">Faculty ID</label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        id="roll"
+                        name="roll"
+                        value={formData.roll}
+                        onChange={handleChange}
+                        required
+                      />
+                    </div>
+                    <div className="form-group row no-margin">
+                      <label htmlFor="password">Password</label>
+                      <input
+                        type="password"
+                        className="form-control"
+                        id="password"
+                        name="password"
+                        value={formData.password}
+                        onChange={handleChange}
+                        required
+                      />
+                    </div>
+                    <button type="submit" className="btn btn-primary btn-block" style={{ marginTop: '20px' }}>
+                      Login as Admin
+                    </button>
+                  </form>
                 </div>
               </div>
-              
             </div>
           </div>
         </div>
-        </div>
       </div>
     </div>
-     </section>
+  </div>
+</section>
+
   );
 };
 

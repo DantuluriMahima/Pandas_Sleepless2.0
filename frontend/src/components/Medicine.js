@@ -288,12 +288,17 @@ useEffect(() => {
             <div className="logo d-flex align-items-center">
               <img src="/static/logo.svg.png" alt="IIT Dharwad Logo" />
               <h1>IIT Dharwad</h1>
+              <div className="link-container">
+                    <Link to="/" className="custom-link">Home</Link>
+                    <span className="separator"> | </span>
+                    <Link to="/admin/medicine" className="custom-link">Medicines</Link>
+                    <span className="separator"> | </span>
+                    <Link to="/admin/pendingmeds" className="custom-link">Pending Medicines</Link>
+                  </div>
             </div>
 
         </div>
         
-            <button className="mobile-nav-toggle mobile-nav-show bi bi-three-dots"></button>
-            <button className="mobile-nav-toggle mobile-nav-hide d-none bi bi-x"></button>
         <nav className="header-nav ms-auto">
       <ul className="d-flex align-items-center list-unstyled m-4">
         <li className="nav-item dropdown">
@@ -343,30 +348,8 @@ useEffect(() => {
     </nav>
            <i className="bi bi-list toggle-sidebar-btn"></i>
         </header>
-        <aside id="sidebar" className="sidebar">
-            <ul className="sidebar-nav" id="sidebar-nav">
-
-            <li className="nav-item">
-                <Link className="nav-link collapsed" to="/admin">
-                <i className="bi bi-grid"></i>
-                <span>Home</span>
-                </Link>
-            </li>
-            <li className="nav-item">
-            <Link className="nav-link " to="/admin/medicine">
-            <i className="bi bi-table"></i><span>Medicine Database</span>
-            </Link>
-            </li>
-            <li className="nav-item">
-            <Link className="nav-link collapsed" to="/admin/pendingmeds">
-            <i className="bi bi-droplet-half"></i><span>Pending Medicines</span>
-            </Link>
-            </li>
-            
-            </ul>
-
-            </aside>
-        <main id="main" className="main">
+        
+        <main id="main" className="main" style={{ height: '100vh', width: '100%' }}>
           <div className="pagetitle">
             <h1>Medicine Data</h1>
             <nav>

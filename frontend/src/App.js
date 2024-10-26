@@ -15,6 +15,7 @@ import { Services } from "./components/services";
 import { Testimonials } from "./components/testimonials";
 import { Team } from "./components/Team";
 import { Footer } from "./components/Footer";
+import Registration from './components/Register.js';
 import { Map } from "./components/Map"
 import JsonData from "./data/data.json";
 import SmoothScroll from "smooth-scroll";
@@ -33,7 +34,8 @@ const App = () => {
     <Router>
       
       <Routes>
-      <Route path="/Login" element={<Login />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Registration />} />
         <Route path="/admin" element={<AdminPage />} />
         <Route path="/admin/medicine" element={<Medicine />} />
         <Route path="/admin/pendingmeds" element={<PendingMedicines />} />

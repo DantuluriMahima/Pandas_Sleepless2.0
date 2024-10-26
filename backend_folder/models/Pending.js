@@ -5,9 +5,14 @@ const pendingSchema = new mongoose.Schema({
   email: { type: String, required: true },
   date: { type: Date, required: true },
   doctor: { type: String, required: true },
-  medicine: { type: String, required: true },
-  qty: { type: Number, required: true },
-  status: { type: String, required: true },
+  medicines: [
+    {
+      name: { type: String, required: true },
+      qty: { type: Number, required: true },
+      checked: { type: Boolean, default: false }
+    }
+  ],
+  status: { type: String, required: true, default: 'pending' },
 });
 
 const Pending = mongoose.model('Pending', pendingSchema, 'pending');
