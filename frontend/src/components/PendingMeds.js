@@ -416,12 +416,13 @@ useEffect(() => {
                           <table className="table table-responsive table-bordered table-hover">
                           <thead>
                             <tr>
-                              <th>Medicine Name</th>
-                              <th>Form</th>
-                              <th>Strength</th>
-                              <th>Instructions</th>
-                              <th>Category</th>
-                              <th>Additional Notes</th>
+                              <th>Patient Name</th>
+                              <th>Email Id</th>
+                              <th>Date</th>
+                              <th>Doctor Incharge</th>
+                              <th>Medicine</th>
+                              <th>Quantity</th>
+                              <th>Status</th>
                             </tr>
                           </thead>
                           <tbody>
@@ -468,9 +469,17 @@ useEffect(() => {
                                   <input type="text" className="form-control" id="email" name="email" value={newMedicine.email} onChange={handleChange} />
                                 </div>
                                 <div className="mb-3">
-                                  <label htmlFor="email" className="form-label">Date</label>
-                                  <input type="text" className="form-control" id="email" name="email" value={newMedicine.date} onChange={handleChange} />
-                                </div>
+                                    <label htmlFor="date" className="form-label">Date</label>
+                                    <input
+                                      type="date"  
+                                      className="form-control"
+                                      id="date"
+                                      name="date"
+                                      value={newMedicine.date}
+                                      onChange={handleChange}
+                                    />
+                                  </div>
+
 
                                 <div className="mb-3">
                                   <label htmlFor="doctor" className="form-label">Doctor Incharge</label>
