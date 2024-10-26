@@ -6,9 +6,7 @@ import { Dropdown, DropdownButton, Badge, Image } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import 'bootstrap-icons/font/bootstrap-icons.css';
-import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import { format } from 'date-fns';
 import '../styles/admin.css';
 
 import { useNavigate } from 'react-router-dom';
@@ -16,72 +14,131 @@ import { useNavigate } from 'react-router-dom';
 const PendingMedicines = () => {
   const navigate = useNavigate();
 
-  const [medicines, setMedicine] = useState([]);
+  const [Patient, setPatient] = useState([]);
 
-  const [newMedicine, setNewMedicine] = useState({ name: '', form: '', strength: '', instructions: '', category: '', addition:''});
+  const [newPatient, setNewPatient] = useState({ name: '', email: '', date: '', doctor: '', medicines: [{ name: '', qty: '', checked: false }], status: ''});
 
+  const handleCheck = (patientId, medicineIndex) => {
+    setPatient(prevEntries =>
+      prevEntries.map(patient => {
+          if (patient._id === patientId) {
+              const updatedMedicines = patient.medicines.map((medicine, index) => {
+                  if (index === medicineIndex) {
+                      return { ...medicine, checked: !medicine.checked };
+                  }
+                  return medicine;
+              });
+              // Update status based on whether all medicines are checked
+              const allChecked = updatedMedicines.every(med => med.checked);
+              const updatedPatient = { ...patient, medicines: updatedMedicines, status: allChecked ? 'Completed' : 'Pending' };
 
+        // Update the database with the modified patient entry
+        updatePatientInDatabase(patientId, updatedPatient);
+
+        return updatedPatient;
+          }
+          return patient;
+      })
+  );
+};
+const updatePatientInDatabase = async (patientId, updatedPatient) => {
+  try {
+    await axios.put(`http://localhost:5000/api/pendingdb/${patientId}`, updatedPatient); 
+  } catch (error) {
+    console.error('Error updating patient:', error);
+  }
+};
+
+const sortedEntries = [...Patient].sort((a, b) => {
+  if (a.status === 'Pending' && b.status === 'Completed') return -1;
+  if (a.status === 'Completed' && b.status === 'Pending') return 1;
+  return 0;
+});
   useEffect(() => {
-    fetchMedicines();
+  fetchPatients();
   }, []);
 
 //Function to retrieve database information
-  const fetchMedicines = async () => {
+  const fetchPatients = async () => {
     try {
       const response = await axios.get('http://localhost:5000/api/pendingdb');
-      setMedicine(response.data);
+      setPatient(response.data);
     } catch (error) {
-      console.error('Error fetching medicines:', error);
+      console.error('Error fetching patients:', error);
     }
   };
 
    // Function to handle form input changes
    const handleChange = (e) => {
     const { name, value } = e.target;
-    setNewMedicine({ ...newMedicine, [name]: value });
+    setNewPatient({ ...newPatient, [name]: value });
   };
   const handleDateChange = (date, name) => {
-    setNewMedicine((prev) => ({ ...prev, [name]: date }));
+    setNewPatient((prev) => ({ ...prev, [name]: date }));
+  };
+  const handleMedicineCheck = (index) => {
+    // Toggle the checked state of the selected medicine
+    const updatedMedicines = newPatient.medicines.map((med, idx) => 
+      idx === index ? { ...med, checked: !med.checked } : med
+    );
+    setNewPatient({ ...newPatient, medicines: updatedMedicines });
   };
 
-
+  // Handle change for each medicine row
+  const handleMedicineChange = (index, e) => {
+    const { name, value } = e.target;
+    const updatedMedicines = newPatient.medicines.map((medicine, i) => 
+      i === index ? { ...medicine, [name]: value } : medicine
+    );
+    setNewPatient((prev) => ({ ...prev, medicines: updatedMedicines }));
+  };
+  
+  // Add a new medicine row
+  const addMedicineRow = () => {
+    setNewPatient((prev) => ({
+      ...prev,
+      medicines: [...prev.medicines, { name: '', qty: '', checked: false }],
+    }));
+  };
+  
+  // Remove a medicine row
+  const removeMedicineRow = (index) => {
+    setNewPatient((prev) => ({
+      ...prev,
+      medicines: prev.medicines.filter((_, i) => i !== index),
+    }));
+  };
+  
     const handleSubmit = async (e) => {
       e.preventDefault();
     
       
       
-      if (!newMedicine.name || !newMedicine.form ||!newMedicine.strength || !newMedicine.instructions || !newMedicine.category || !newMedicine.addition) {
+      if (!newPatient.name || !newPatient.email ||!newPatient.date || !newPatient.doctor ||newPatient.medicines.length === 0) {
         alert('Please fill in all fields.');
         return;
       }
-    
+      
+      const allMedicinesChecked = newPatient.medicines.every(med => med.checked);
+      const status = allMedicinesChecked ? 'Completed' : 'Pending';
+
       
       try {
-        console.log('New Medicine data:', newMedicine);
+        console.log('New Patient data:', { ...newPatient, status });
         
-        const response2 = await axios.get(`http://localhost:5000/
-          /pendingdb/search?category=id&keyword=${newMedicine.id}`);
-        console.log("Search response:", response2);
+       const response = await axios.post('http://localhost:5000/api/pendingdb', { ...newPatient, status });
+          console.log('Patient added:', response.data);
     
-        if (!response2.data || response2.data.length === 0) {
-          const response = await axios.post('http://localhost:5000/api/pendingdb', newMedicine);
-          console.log('Medicine added:', response.data);
-    
-          setNewMedicine({
+          setNewPatient({
             name: '', 
             email: '', 
             date: '', 
             doctor: '', 
-            medicine: '', 
-            qty:'',
+            medicines: [{ name: '', qty: '', checked: false }],
             status:'',
           });
     
-          fetchMedicines();
-          window.location.reload(); 
-        } else {        
-          throw new Error("Roll Number exists in the database.");
-        }
+          fetchPatients();
       } catch (error) {
         console.error('Error adding entry:', error);
         if (error.response && error.response.data) {
@@ -97,8 +154,8 @@ const PendingMedicines = () => {
   const handleDeleteMedicine = async (id) => {
     try {
       await axios.delete(`http://localhost:5000/api/pendingdb/${id}`);
-      setMedicine(medicines.filter(medicine => medicine._id !== id));
-      fetchMedicines(); // Refresh the list after deletion
+      setPatient(Patient.filter(medicine => medicine._id !== id));
+      fetchPatients(); // Refresh the list after deletion
     } catch (error) {
       console.error('Error deleting entry:', error);
     }
@@ -109,7 +166,7 @@ const PendingMedicines = () => {
 
   const [currentPage, setCurrentPage] = useState(1);
   const [entriesPerPage, setEntriesPerPage] = useState(5);
-  const filteredMedicines = medicines.filter(medicine => {
+  const filteredMedicines = Patient.filter(medicine => {
     return Object.values(medicine).some(value =>
       String(value).toLowerCase().includes(searchTerm.toLowerCase())
     );
@@ -294,9 +351,7 @@ useEffect(() => {
 
         </div>
         
-            <button className="mobile-nav-toggle mobile-nav-show bi bi-three-dots"></button>
-            <button className="mobile-nav-toggle mobile-nav-hide d-none bi bi-x"></button>
-        <nav className="header-nav ms-auto">
+           <nav className="header-nav ms-auto">
       <ul className="d-flex align-items-center list-unstyled m-4">
         <li className="nav-item dropdown">
           <DropdownButton
@@ -426,16 +481,29 @@ useEffect(() => {
                             </tr>
                           </thead>
                           <tbody>
-                            {currentEntries.map(medicine => (
-                              <tr key={medicine._id}>
-                                <td>{medicine.name}</td>
-                                <td>{medicine.email}</td>
-                                <td>{medicine.date}</td>
-                                <td>{medicine.doctor}</td>
-                                <td>{medicine.medicine}</td>
-                                <td>{medicine.qty}</td> 
-                                <td>{medicine.status}</td>                             
-                              </tr>
+                          {sortedEntries.map(patient => (
+                    <React.Fragment key={patient._id}>
+                        {patient.medicines.map((medicine, index) => (
+                            <tr key={`${patient._id}-${index}`} style={{ opacity: medicine.checked ? 0.5 : 1 }}>
+                                <td>{index === 0 ? patient.name : ''}</td>
+                                <td>{index === 0 ? patient.email : ''}</td>
+                                <td>{index === 0 ? patient.date : ''}</td>
+                                <td>{index === 0 ? patient.doctor : ''}</td>
+                                <td>
+                                    <label>
+                                        <input
+                                            type="checkbox"
+                                            checked={medicine.checked}
+                                            onChange={() => handleCheck(patient._id, index)}
+                                        />
+                                        {medicine.name}
+                                    </label>
+                                </td>
+                                <td>{medicine.qty}</td>
+                                <td>{index === 0 ? patient.status : ''}</td>
+                            </tr>
+                        ))}
+                    </React.Fragment>
                             ))}
                           </tbody>
                         </table>
@@ -462,11 +530,11 @@ useEffect(() => {
                               <form onSubmit={handleSubmit}>
                                 <div className="mb-3">
                                   <label htmlFor="name" className="form-label">Patient Name</label>
-                                  <input type="text" className="form-control" id="name" name="name" value={newMedicine.name} onChange={handleChange} />
+                                  <input type="text" className="form-control" id="name" name="name" value={newPatient.name} onChange={handleChange} />
                                 </div>
                                 <div className="mb-3">
-                                  <label htmlFor="email" className="form-label">Patient EmailId</label>
-                                  <input type="text" className="form-control" id="email" name="email" value={newMedicine.email} onChange={handleChange} />
+                                  <label htmlFor="email" className="form-label">Patient Email Id</label>
+                                  <input type="text" className="form-control" id="email" name="email" value={newPatient.email} onChange={handleChange} />
                                 </div>
                                 <div className="mb-3">
                                     <label htmlFor="date" className="form-label">Date</label>
@@ -475,7 +543,7 @@ useEffect(() => {
                                       className="form-control"
                                       id="date"
                                       name="date"
-                                      value={newMedicine.date}
+                                      value={newPatient.date}
                                       onChange={handleChange}
                                     />
                                   </div>
@@ -483,20 +551,45 @@ useEffect(() => {
 
                                 <div className="mb-3">
                                   <label htmlFor="doctor" className="form-label">Doctor Incharge</label>
-                                  <input type="text" className="form-control" id="doctor" name="doctor" value={newMedicine.doctor} onChange={handleChange} />
+                                  <input type="text" className="form-control" id="doctor" name="doctor" value={newPatient.doctor} onChange={handleChange} />
                                 </div>
-                                <div className="mb-3">
-                                  <label htmlFor="medicine" className="form-label">Medicine</label>
-                                  <input type="text" className="form-control" id="medicine" name="medicine" value={newMedicine.medicine} onChange={handleChange} />
-                                </div>
-                                <div className="mb-3">
-                                  <label htmlFor="qty" className="form-label">Quantity</label>
-                                  <input type="text" className="form-control" id="qty" name="qty" value={newMedicine.qty} onChange={handleChange} />
-                                </div> 
-                                <div className="mb-3">
-                                  <label htmlFor="status" className="form-label">Status</label>
-                                  <input type="text" className="form-control" id="status" name="status" value={newMedicine.status} onChange={handleChange} />
-                                </div>                            
+                                <label className="form-label">Medicines</label>
+                                {newPatient.medicines.map((medicine, index) => (
+                                  <div key={index}>
+                                    <input 
+                                      type="text" 
+                                      placeholder="Medicine Name" 
+                                      value={medicine.name} 
+                                      onChange={(e) => {
+                                        const updatedMedicines = [...newPatient.medicines];
+                                        updatedMedicines[index].name = e.target.value;
+                                        setNewPatient({ ...newPatient, medicines: updatedMedicines });
+                                      }}
+                                    />
+                                    <input 
+                                      type="number" 
+                                      placeholder="Quantity" 
+                                      value={medicine.qty} 
+                                      onChange={(e) => {
+                                        const updatedMedicines = [...newPatient.medicines];
+                                        updatedMedicines[index].qty = e.target.value;
+                                        setNewPatient({ ...newPatient, medicines: updatedMedicines });
+                                      }}
+                                    />
+                                    <input 
+                                      type="checkbox" 
+                                      checked={medicine.checked} 
+                                      value={medicine.checked} 
+                                      onChange={() => handleMedicineCheck(index)}
+                                    />
+                                    <button type="button" className="btn btn-danger" onClick={() => removeMedicineRow(index)}>Remove</button>
+                                    
+                                  </div>
+                                ))}
+                                    <button type="button" className="btn btn-secondary mb-3" onClick={addMedicineRow}>
+                                      Add Medicine
+                                    </button>                    
+                                                
                                 <button type="submit" className="btn btn-primary">Submit</button>
                               </form>
                             </div>

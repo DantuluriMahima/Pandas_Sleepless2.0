@@ -292,8 +292,6 @@ useEffect(() => {
 
         </div>
         
-            <button className="mobile-nav-toggle mobile-nav-show bi bi-three-dots"></button>
-            <button className="mobile-nav-toggle mobile-nav-hide d-none bi bi-x"></button>
         <nav className="header-nav ms-auto">
       <ul className="d-flex align-items-center list-unstyled m-4">
         <li className="nav-item dropdown">

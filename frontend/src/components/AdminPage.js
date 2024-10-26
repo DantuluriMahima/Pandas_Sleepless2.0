@@ -164,9 +164,7 @@ const AdminPage = () => {
               <img src="/static/logo.svg.png" alt="IIT Dharwad Logo" />
               <h1>IIT Dharwad</h1>
             </div>
-            <button className="mobile-nav-toggle mobile-nav-show bi bi-three-dots"></button>
-            <button className="mobile-nav-toggle mobile-nav-hide d-none bi bi-x"></button>
-        </div>
+           </div>
         <nav className="header-nav ms-auto">
       <ul className="d-flex align-items-center list-unstyled m-4">
         <li className="nav-item dropdown">
