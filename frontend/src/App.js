@@ -5,6 +5,7 @@ import AdminPage from './components/AdminPage.js';
 import Medicine from './components/Medicine.js';
 import PendingMedicines from './components/PendingMeds.js';
 import './App.css';
+import Login from './components/Login';
 import User from './components/User';
 import { useState, useEffect } from "react";
 import { Navigation } from "./components/navigation";
@@ -32,6 +33,7 @@ const App = () => {
     <Router>
       
       <Routes>
+      <Route path="/Login" element={<Login />} />
         <Route path="/admin" element={<AdminPage />} />
         <Route path="/admin/medicine" element={<Medicine />} />
         <Route path="/admin/pendingmeds" element={<PendingMedicines />} />
