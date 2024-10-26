@@ -49,11 +49,7 @@ const updatePatientInDatabase = async (patientId, updatedPatient) => {
   }
 };
 
-const sortedEntries = [...Patient].sort((a, b) => {
-  if (a.status === 'Pending' && b.status === 'Completed') return -1;
-  if (a.status === 'Completed' && b.status === 'Pending') return 1;
-  return 0;
-});
+
   useEffect(() => {
   fetchPatients();
   }, []);
@@ -173,8 +169,13 @@ const sortedEntries = [...Patient].sort((a, b) => {
   });
   const indexOfLastEntry = currentPage * entriesPerPage;
   const indexOfFirstEntry = indexOfLastEntry - entriesPerPage;
-  const currentEntries = filteredMedicines.slice(indexOfFirstEntry, indexOfLastEntry);
-
+  const sortedEntries = [...filteredMedicines].sort((a, b) => {
+    if (a.status === 'Pending' && b.status === 'Completed') return -1;
+    if (a.status === 'Completed' && b.status === 'Pending') return 1;
+    return 0;
+  });
+  const currentEntries = sortedEntries.slice(indexOfFirstEntry, indexOfLastEntry);
+  
   // Change page
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
@@ -419,6 +420,11 @@ useEffect(() => {
             <i className="bi bi-droplet-half"></i><span>Pending Medicines</span>
             </Link>
             </li>
+            <li className="nav-item">
+            <Link className="nav-link collapsed" to="/admin/appointment">
+            <i className="bi bi-person-lines-fill"></i><span>Appointment</span>
+            </Link>
+            </li>
             
             </ul>
 
@@ -481,15 +487,15 @@ useEffect(() => {
                             </tr>
                           </thead>
                           <tbody>
-                          {sortedEntries.map(patient => (
+                          {currentEntries.map(patient => (
                     <React.Fragment key={patient._id}>
                         {patient.medicines.map((medicine, index) => (
-                            <tr key={`${patient._id}-${index}`} style={{ opacity: medicine.checked ? 0.5 : 1 }}>
+                            <tr key={`${patient._id}-${index}`}>
                                 <td>{index === 0 ? patient.name : ''}</td>
                                 <td>{index === 0 ? patient.email : ''}</td>
                                 <td>{index === 0 ? patient.date : ''}</td>
                                 <td>{index === 0 ? patient.doctor : ''}</td>
-                                <td>
+                                <td style={{ opacity: medicine.checked ? 0.5 : 1 }}>
                                     <label>
                                         <input
                                             type="checkbox"

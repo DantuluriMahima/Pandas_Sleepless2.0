@@ -18,7 +18,7 @@ const Medicinedb = () => {
 
   const [medicines, setMedicine] = useState([]);
 
-  const [newMedicine, setNewMedicine] = useState({ name: '', form: '', strength: '', instructions: '', category: '', addition:''});
+  const [newMedicine, setNewMedicine] = useState({ name: '', form: '', strength: '', instructions: '', category: ''});
 
 
   useEffect(() => {
@@ -50,7 +50,7 @@ const Medicinedb = () => {
     
       
       
-      if (!newMedicine.name || !newMedicine.form ||!newMedicine.strength || !newMedicine.instructions || !newMedicine.category || !newMedicine.addition) {
+      if (!newMedicine.name || !newMedicine.form ||!newMedicine.strength || !newMedicine.instructions || !newMedicine.category ) {
         alert('Please fill in all fields.');
         return;
       }
@@ -72,7 +72,6 @@ const Medicinedb = () => {
             strength: '', 
             instructions: '', 
             category: '', 
-            addition:'',
           });
     
           fetchMedicines();
@@ -360,6 +359,11 @@ useEffect(() => {
             <i className="bi bi-droplet-half"></i><span>Pending Medicines</span>
             </Link>
             </li>
+            <li className="nav-item">
+            <Link className="nav-link collapsed" to="/admin/appointment">
+            <i className="bi bi-person-lines-fill"></i><span>Appointment</span>
+            </Link>
+            </li>
             
             </ul>
 
@@ -420,7 +424,6 @@ useEffect(() => {
                               <th>Strength</th>
                               <th>Instructions</th>
                               <th>Category</th>
-                              <th>Additional Notes</th>
                             </tr>
                           </thead>
                           <tbody>
@@ -430,8 +433,7 @@ useEffect(() => {
                                 <td>{medicine.form}</td>
                                 <td>{medicine.strength}</td>
                                 <td>{medicine.instructions}</td>
-                                <td>{medicine.category}</td>
-                                <td>{medicine.addition}</td>                             
+                                <td>{medicine.category}</td>                     
                               </tr>
                             ))}
                           </tbody>
@@ -476,10 +478,6 @@ useEffect(() => {
                                 <div className="mb-3">
                                   <label htmlFor="category" className="form-label">Category</label>
                                   <input type="text" className="form-control" id="category" name="category" value={newMedicine.category} onChange={handleChange} />
-                                </div> 
-                                <div className="mb-3">
-                                  <label htmlFor="addition" className="form-label">Additional Notes</label>
-                                  <input type="text" className="form-control" id="addition" name="addition" value={newMedicine.addition} onChange={handleChange} />
                                 </div>                            
                                 <button type="submit" className="btn btn-primary">Submit</button>
                               </form>
@@ -517,7 +515,6 @@ useEffect(() => {
                               <th>Strength</th>
                               <th>Instructions</th>
                               <th>Category</th>
-                              <th>Additional Notes</th>
                             </tr>
                           </thead>
                           <tbody>
@@ -528,7 +525,6 @@ useEffect(() => {
                                 <td>{medicine.strength}</td>
                                 <td>{medicine.instructions}</td>
                                 <td>{medicine.category}</td>
-                                <td>{medicine.addition}</td>
                                 
                                 <td>
                                   <button className="btn btn-danger" onClick={() => handleDeleteMedicine(medicine._id)}>Delete</button>

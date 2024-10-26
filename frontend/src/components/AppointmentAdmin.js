@@ -7,8 +7,45 @@ import { Dropdown, DropdownButton, Badge, Image } from 'react-bootstrap';
 import '../styles/admin.css';
 import { Link } from 'react-router-dom';
 
-const AdminPage = () => {
+const Appointment = () => {
+    const [appointments, setAppointments] = useState([]);
+    const [trafficLevel, setTrafficLevel] = useState('Low');
+    useEffect(() => {
+        // Fetch the appointments from the API
+        const fetchAppointments = async () => {
+            try {
+                const response = await fetch('http://localhost:5000/api/appointments');
+                const data = await response.json();
+                setAppointments(data);
 
+                // Calculate traffic level based on appointments data
+                calculateTrafficLevel(data);
+            } catch (error) {
+                console.error('Error fetching appointments:', error);
+            }
+        };
+
+        fetchAppointments();
+    }, []);
+
+    const calculateTrafficLevel = (appointments) => {
+        const currentHour = new Date().getHours(); // Get the current hour
+
+        // Count appointments for the current hour
+        const hourCount = appointments.filter((appointment) => {
+            const appointmentHour = new Date(`1970-01-01T${appointment.timeSlot}`).getHours(); // Extract hour from time slot
+            return appointmentHour === currentHour;
+        }).length;
+
+        // Set traffic level based on the hour count
+        if (hourCount > 10) {
+            setTrafficLevel('High');
+        } else if (hourCount >= 5) {
+            setTrafficLevel('Medium');
+        } else {
+            setTrafficLevel('Low');
+        }
+    };
   const token = localStorage.getItem('token');
   console.log("Token:", token);
     // State to handle sidebar toggle
@@ -219,7 +256,7 @@ const AdminPage = () => {
         <ul className="sidebar-nav" id="sidebar-nav">
 
         <li className="nav-item">
-            <Link className="nav-link " to="/admin">
+            <Link className="nav-link collapsed" to="/admin">
             <i className="bi bi-grid"></i>
             <span>Home</span>
             </Link>
@@ -234,8 +271,9 @@ const AdminPage = () => {
             <i className="bi bi-droplet-half"></i><span>Pending Medicines</span>
             </Link>
             </li>
+
             <li className="nav-item">
-            <Link className="nav-link collapsed" to="/admin/appointment">
+            <Link className="nav-link " to="/admin/appointment">
             <i className="bi bi-person-lines-fill"></i><span>Appointment</span>
             </Link>
             </li>
@@ -245,27 +283,42 @@ const AdminPage = () => {
         <main id="main" className="main" >
 
         <div className="pagetitle">
-        <h1>Home</h1>
+        <h1>Appointments</h1>
         <nav>
             <ol className="breadcrumb">
             <li className="breadcrumb-item active" style={{ color: "#ccc" }}>Home</li>
             </ol>
         </nav>
         </div>
-        <section id="hero" className="hero section" >
-
-            <div className="container">
-                <div className="row gy-4 justify-content-center justify-content-lg-between">
-                <div className="col-lg-5 order-2 order-lg-1 d-flex flex-column justify-content-center">
-                    <h1>Welcome to<br />Admin Page</h1>
-                    <p>Indian Institute of Technology, Dharwad</p>
-                    <div className="d-flex">
-                    </div>
-                </div>
-                </div>
+        <div>
+            <h2>All Booked Appointments</h2>
+            <div>
+                <strong>Traffic Level:</strong> {trafficLevel === 'High' && <span style={{ color: 'red' }}>High Traffic</span>}
+                {trafficLevel === 'Medium' && <span style={{ color: 'orange' }}>Medium Traffic</span>}
+                {trafficLevel === 'Low' && <span style={{ color: 'green' }}>Low Traffic</span>}
             </div>
-
-            </section>
+            <table border="1" style={{ width: '100%', textAlign: 'left' }}>
+                <thead>
+                    <tr>
+                        <th>Email</th>
+                        <th>Doctor Name</th>
+                        <th>Date</th>
+                        <th>Time Slot</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {appointments.map((appointment) => (
+                        <tr key={appointment._id}>
+                            <td>{appointment.email}</td>
+                            <td>{appointment.doctorName}</td>
+                            <td>{appointment.date}</td>
+                            <td>{appointment.timeSlot}</td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+        </div>
+        
         </main>
 
       
@@ -375,4 +428,4 @@ const AdminPage = () => {
   );
 };
 
-export default AdminPage;
+export default Appointment;
