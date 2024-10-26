@@ -293,6 +293,9 @@ useEffect(() => {
                     <Link to="/admin/medicine" className="custom-link">Medicines</Link>
                     <span className="separator"> | </span>
                     <Link to="/admin/pendingmeds" className="custom-link">Pending Medicines</Link>
+                    <span className="separator"> | </span>
+                    <Link to="/admin/appointment" className="custom-link">Appointments</Link>
+                    
                   </div>
             </div>
 

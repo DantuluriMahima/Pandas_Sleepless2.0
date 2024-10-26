@@ -201,6 +201,16 @@ const Appointment = () => {
               <img src="/static/logo.svg.png" alt="IIT Dharwad Logo" />
               <h1>IIT Dharwad</h1>
             </div>
+            <div className="link-container">
+                    <Link to="/admin" className="custom-link">Home</Link>
+                    <span className="separator"> | </span>
+                    <Link to="/admin/medicine" className="custom-link">Medicines</Link>
+                    <span className="separator"> | </span>
+                    <Link to="/admin/pendingmeds" className="custom-link">Pending Medicines</Link>
+                    <span className="separator"> | </span>
+                    <Link to="/admin/appointment" className="custom-link">Appointments</Link>
+                    
+                  </div>
            </div>
         <nav className="header-nav ms-auto">
       <ul className="d-flex align-items-center list-unstyled m-4">
@@ -251,35 +261,7 @@ const Appointment = () => {
     </nav>
            <i className="bi bi-list toggle-sidebar-btn"></i>
         </header>
-        <aside id="sidebar" className="sidebar">
-
-        <ul className="sidebar-nav" id="sidebar-nav">
-
-        <li className="nav-item">
-            <Link className="nav-link collapsed" to="/admin">
-            <i className="bi bi-grid"></i>
-            <span>Home</span>
-            </Link>
-        </li>
-        <li className="nav-item">
-            <Link className="nav-link collapsed" to="/admin/medicine">
-            <i className="bi bi-table"></i><span>Medicine Database</span>
-            </Link>
-        </li>
-        <li className="nav-item">
-            <Link className="nav-link collapsed" to="/admin/pendingmeds">
-            <i className="bi bi-droplet-half"></i><span>Pending Medicines</span>
-            </Link>
-            </li>
-
-            <li className="nav-item">
-            <Link className="nav-link " to="/admin/appointment">
-            <i className="bi bi-person-lines-fill"></i><span>Appointment</span>
-            </Link>
-            </li>
-        </ul>
-
-        </aside>
+        
         <main id="main" className="main" >
 
         <div className="pagetitle">

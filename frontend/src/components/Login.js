@@ -12,7 +12,7 @@ const Login = () => {
     roll: '',
     password: ''
   });
-  const [userType, setUserType] = useState('student'); // 'admin' or 'student'
+  const [userType, setUserType] = useState('student'); 
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -25,19 +25,18 @@ const Login = () => {
   const navigate = useNavigate();
 
   
-  // Function to handle student login with additional authorization check
   const handleLoginClick = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:5000/api/students/login', formData);
+      const response = await axios.post('http://localhost:5000/api/register/login', formData);
      
       if (response.data.auth) {
-        const response2 = await axios.get(`http://localhost:5000/api/students/search?category=roll&keyword=${formData.roll}`);
+        const response2 = await axios.get(`http://localhost:5000/api/register/search?category=roll&keyword=${formData.roll}`);
         if (response2.data[0].position === 'Admin') {
           alert('Login successful as User');
           localStorage.setItem('token', response.data.token);
-          localStorage.setItem('studentId', response.data.studentId);
-          navigate('/AdminPage');
+          localStorage.setItem('userId', response.data.userId);
+          navigate('/admin');
         } else {
           alert('Unauthorized access');
         }
@@ -54,15 +53,15 @@ const Login = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await axios.post('http://localhost:5000/api/students/login', formData);
+      const response = await axios.post('http://localhost:5000/api/register/login', formData);
       if (response.data.auth) {
-        const response2 = await axios.get(`http://localhost:5000/api/students/search?category=roll&keyword=${formData.roll}`);
+        const response2 = await axios.get(`http://localhost:5000/api/register/search?category=roll&keyword=${formData.roll}`);
         if (response2.data[0].position === 'Student' || response2.data[0].position === 'Faculty') {
           alert('Login successful as User');
           localStorage.setItem('token', response.data.token);
-          localStorage.setItem('studentId', response.data.studentId);
-          console.log( response.data.studentId);
-          navigate('/StudentPage');
+          localStorage.setItem('userId', response.data.userId);
+          console.log( response.data.userId);
+          navigate('/UserPage');
         } else {
           alert('Unauthorized access');
         }

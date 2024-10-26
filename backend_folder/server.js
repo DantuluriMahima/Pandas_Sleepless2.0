@@ -19,7 +19,7 @@ const loginRoute =require('./routes/loginroute');
 
 app.use('/api/medicinedb', medicineRoute);
 app.use('/api/pendingdb', pendingRoute);
-app.use('/api/login', loginRoute);
+app.use('/api/register', loginRoute);
 
 const mongoose = require('mongoose');
 const { google } = require('googleapis');
