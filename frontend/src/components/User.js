@@ -1,45 +1,43 @@
-// src/components/user.js
+// src/components/User.js
+import React from 'react';
+import '../styles/User.css';
 
-export function renderUI() {
-    document.body.innerHTML = `
-        <div style="padding: 20px;">
+function User() {
+    return (
+        <section id="userhome">
+        <div className="container">
             <h2>Book an Appointment</h2>
             <form id="appointmentForm">
-                <label for="date">Date:</label>
+                <label htmlFor="date">Date:</label>
                 <input type="date" id="date" required />
-
-                <label for="time">Time:</label>
+                
+                <label htmlFor="time">Time:</label>
                 <input type="time" id="time" required />
-
-                <label for="doctorId">Select Doctor:</label>
+                
+                <label htmlFor="doctorId">Doctor:</label>
                 <select id="doctorId" required>
-                    <option value="">Choose a doctor</option>
-                    <option value="1">Dr. Smith</option>
-                    <option value="2">Dr. Johnson</option>
-                    <option value="3">Dr. Brown</option>
-                    <option value="4">Dr. Williams</option>
-                    <option value="5">Dr. Jones</option>
-                    <option value="6">Dr. Garcia</option>
-                    <option value="7">Dr. Martinez</option>
-                    <option value="8">Dr. Davis</option>
-                    <option value="9">Dr. Rodriguez</option>
-                    <option value="10">Dr. Lopez</option>
+                    {Array.from({ length: 10 }, (_, i) => (
+                        <option key={i} value={`doctor${i + 1}`}>
+                            Doctor {i + 1}
+                        </option>
+                    ))}
                 </select>
-
-                <label for="patientId">Patient Email:</label>
+                
+                <label htmlFor="patientId">Patient Email:</label>
                 <input type="email" id="patientId" required />
-
+                
                 <button type="submit">Book Appointment</button>
             </form>
 
             <h2>Cancel Medicine</h2>
             <form id="cancelForm">
-                <label for="medicineId">Medicine ID:</label>
+                <label htmlFor="medicineId">Medicine ID:</label>
                 <input type="text" id="medicineId" required />
                 <button type="submit">Cancel Medicine</button>
             </form>
         </div>
-    `;
-
-    // Event listeners (same as before)
+    </section>
+    );
 }
+
+export default User;
