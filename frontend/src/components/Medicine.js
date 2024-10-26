@@ -287,6 +287,13 @@ useEffect(() => {
             <div className="logo d-flex align-items-center">
               <img src="/static/logo.svg.png" alt="IIT Dharwad Logo" />
               <h1>IIT Dharwad</h1>
+              <div className="link-container">
+                    <Link to="/" className="custom-link">Home</Link>
+                    <span className="separator"> | </span>
+                    <Link to="/admin/medicine" className="custom-link">Medicines</Link>
+                    <span className="separator"> | </span>
+                    <Link to="/admin/pendingmeds" className="custom-link">Pending Medicines</Link>
+                  </div>
             </div>
 
         </div>
@@ -340,6 +347,7 @@ useEffect(() => {
     </nav>
            <i className="bi bi-list toggle-sidebar-btn"></i>
         </header>
+<<<<<<< HEAD
         <aside id="sidebar" className="sidebar">
             <ul className="sidebar-nav" id="sidebar-nav">
 
@@ -369,6 +377,10 @@ useEffect(() => {
 
             </aside>
         <main id="main" className="main">
+=======
+        
+        <main id="main" className="main" style={{ height: '100vh', width: '100%' }}>
+>>>>>>> 8de78d231ee5f2aff73e45ccbccd2483303cf95e
           <div className="pagetitle">
             <h1>Medicine Data</h1>
             <nav>

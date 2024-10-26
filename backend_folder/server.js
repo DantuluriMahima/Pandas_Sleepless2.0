@@ -27,11 +27,6 @@ const { google } = require('googleapis');
 app.use(cors());
 app.use(express.json()); // To parse JSON bodies
 
-// Connect to MongoDB
-mongoose.connect('mongodb://localhost:27017/appointmentsDB', {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-});
 
 // Define a schema and model for appointments
 const appointmentSchema = new mongoose.Schema({
@@ -67,8 +62,16 @@ app.get('/api/schedule', async (req, res) => {
         res.status(500).json({ error: 'Error fetching data' });
     }
 });
+app.get('/api/appointments', async (req, res) => {
+    try {
+        const appointments = await Appointment.find(); 
+        res.json(appointments);
+    } catch (error) {
+        console.error('Error fetching appointments:', error);
+        res.status(500).json({ error: 'Failed to fetch appointments' });
+    }
+});
 
-// Endpoint to save appointment data to MongoDB
 app.post('/api/book-appointment', async (req, res) => {
   const { email, doctorName, timeSlot, date } = req.body;
 

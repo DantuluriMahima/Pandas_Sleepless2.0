@@ -18,14 +18,13 @@ router.post('/', [
   body('strength').optional().trim().escape(),
   body('instructions').optional().trim().escape(),
   body('category').notEmpty().trim().escape(),
-  body('addition').optional().trim().escape(),
 ], async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
   }
 
-  const { name, form, strength, instructions, category, addition } = req.body;
+  const { name, form, strength, instructions, category } = req.body;
 
   const newMed = new Medicine({
     name, 
@@ -33,7 +32,6 @@ router.post('/', [
     strength, 
     instructions, 
     category, 
-    addition
   });
 
   try {

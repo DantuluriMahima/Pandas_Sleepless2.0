@@ -7,7 +7,6 @@ const medicineSchema = new mongoose.Schema({
   instructions: { type: String, required: true },
   category: { type: String, required: true },
   department: { type: String, required: true },
-  addition: { type: String, required: true },
 });
 
 const Medicine = mongoose.model('Medicine', medicineSchema, 'medicine');
