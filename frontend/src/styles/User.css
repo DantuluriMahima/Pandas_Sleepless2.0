@@ -44,3 +44,31 @@
 #userhome button:hover {
     background-color: #45a049;
 }
+#userhome .table-container {
+    max-height: 300px; /* Adjust height as needed */
+    overflow-y: auto;
+    width: 100%;
+    margin: 0 auto;
+    border: 1px solid #ddd; /* Optional: adds a border around the table */
+}
+
+/* Ensure table takes full width of the container */
+#userhome table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#userhome th, td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+#userhome th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+}
+
+#userhome tr:hover {
+    background-color: #f1f1f1;
+}
