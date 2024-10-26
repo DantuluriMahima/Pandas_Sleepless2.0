@@ -116,62 +116,12 @@ const AdminPage = () => {
           </div>
         </header>
 
-<<<<<<< HEAD
-        <ul className="sidebar-nav" id="sidebar-nav">
-
-        <li className="nav-item">
-            <Link className="nav-link " to="/admin">
-            <i className="bi bi-grid"></i>
-            <span>Home</span>
-            </Link>
-        </li>
-        <li className="nav-item">
-            <Link className="nav-link collapsed" to="/admin/medicine">
-            <i className="bi bi-table"></i><span>Medicine Database</span>
-            </Link>
-        </li>
-        <li className="nav-item">
-            <Link className="nav-link collapsed" to="/admin/pendingmeds">
-            <i className="bi bi-droplet-half"></i><span>Pending Medicines</span>
-            </Link>
-            </li>
-            <li className="nav-item">
-            <Link className="nav-link collapsed" to="/admin/appointment">
-            <i className="bi bi-person-lines-fill"></i><span>Appointment</span>
-            </Link>
-            </li>
-        </ul>
-
-        </aside>
-        <main id="main" className="main" >
-
-        <div className="pagetitle">
-        <h1>Home</h1>
-        <nav>
-            <ol className="breadcrumb">
-            <li className="breadcrumb-item active" style={{ color: "#ccc" }}>Home</li>
-            </ol>
-        </nav>
-        </div>
-        <section id="hero" className="hero section" >
-
-            <div className="container">
-                <div className="row gy-4 justify-content-center justify-content-lg-between">
-                <div className="col-lg-5 order-2 order-lg-1 d-flex flex-column justify-content-center">
-                    <h1>Welcome to<br />Admin Page</h1>
-                    <p>Indian Institute of Technology, Dharwad</p>
-                    <div className="d-flex">
-                    </div>
-                </div>
-                </div>
-=======
         <div className="container-fluid mt-8 pt-5">
           <div className="row justify-content-center">
             <div className="col-md-4 text-center mb-3">
               <Link className="btn btn-primary" to="/admin">
                 Home
               </Link>
->>>>>>> 8de78d231ee5f2aff73e45ccbccd2483303cf95e
             </div>
             <div className="col-md-4 text-center mb-3">
               <Link className="btn btn-secondary" to="/admin/medicine">

@@ -347,40 +347,8 @@ useEffect(() => {
     </nav>
            <i className="bi bi-list toggle-sidebar-btn"></i>
         </header>
-<<<<<<< HEAD
-        <aside id="sidebar" className="sidebar">
-            <ul className="sidebar-nav" id="sidebar-nav">
-
-            <li className="nav-item">
-                <Link className="nav-link collapsed" to="/admin">
-                <i className="bi bi-grid"></i>
-                <span>Home</span>
-                </Link>
-            </li>
-            <li className="nav-item">
-            <Link className="nav-link " to="/admin/medicine">
-            <i className="bi bi-table"></i><span>Medicine Database</span>
-            </Link>
-            </li>
-            <li className="nav-item">
-            <Link className="nav-link collapsed" to="/admin/pendingmeds">
-            <i className="bi bi-droplet-half"></i><span>Pending Medicines</span>
-            </Link>
-            </li>
-            <li className="nav-item">
-            <Link className="nav-link collapsed" to="/admin/appointment">
-            <i className="bi bi-person-lines-fill"></i><span>Appointment</span>
-            </Link>
-            </li>
-            
-            </ul>
-
-            </aside>
-        <main id="main" className="main">
-=======
         
         <main id="main" className="main" style={{ height: '100vh', width: '100%' }}>
->>>>>>> 8de78d231ee5f2aff73e45ccbccd2483303cf95e
           <div className="pagetitle">
             <h1>Medicine Data</h1>
             <nav>
