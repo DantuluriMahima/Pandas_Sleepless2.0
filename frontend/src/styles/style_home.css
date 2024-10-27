@@ -271,7 +271,7 @@ a:focus,
   display: table;
   width: 100%;
   padding: 0;
-  background: url(../img/intro-bg.jpg) center center no-repeat;
+  background: url(../../public/img/intro-bg.jpg) center center no-repeat;
   background-color: #e5e5e5;
   -webkit-background-size: cover;
   -moz-background-size: cover;
@@ -307,6 +307,32 @@ header .intro-text {
   padding-bottom: 200px;
   text-align: center;
 }
+/* admin.css */
+
+/* Styles for the custom links */
+.link-container {
+  margin-top: 20px; /* Space above the links */
+}
+
+.custom-link {
+  text-decoration: none; /* Remove underline */
+  color: #ccc; /* Primary link color */
+  font-weight: bold; /* Bold links */
+  font-size: 20px;
+}
+
+.custom-link:hover {
+  text-decoration: underline; /* Underline on hover */
+  color: #007bff; /* Darker color on hover */
+}
+
+.separator {
+  color: #ccc; /* Color for the separator */
+  font-size: 20px;
+  margin: 0 20px; /* Space around the separator */
+}
+
+
 /* Features Section */
 #features {
   background: #f6f6f6;
@@ -747,9 +773,9 @@ label {
 /* Button Styles */
 #loginpage .btn {
   border-radius: 25px;
+  font-family: 'Roboto', sans-serif;
   padding: 10px 20px; /* Added padding for better click area */
   font-size: 1rem; /* Adjusted font size */
-  font-weight: bold; /* Bold font for emphasis */
   background-color: #007bff; /* Primary color */
   border: none; /* Removed border */
   transition: background-color 0.3s, transform 0.3s; /* Smooth transitions */
@@ -776,12 +802,12 @@ label {
 
 #loginpage .nav-tabs .nav-item {
   margin-bottom: -1px; /* Align the tab items properly */
+  font-family: 'Roboto', sans-serif;
 }
 
 #loginpage .nav-tabs .nav-link {
   border: none;
   border-bottom: 2px solid transparent;
-  font-weight: bold;
   color: #007bff;
   background-color: transparent; /* Ensure background is transparent */
   padding: 10px 20px; /* Added padding for better click area */
@@ -808,9 +834,10 @@ label {
 }
 
 #loginpage .card-body h1 {
-  font-weight: 800;
-  font-size: 40px;
+  font-weight: 100;
+  font-size: 30px;
   text-align: center; /* Centered text for better alignment */
+  font-family: 'Roboto', sans-serif;
 }
 
 #loginpage .card-body .form-group {
@@ -838,6 +865,7 @@ label {
 }
 
 #loginpage .card-body label i {
+  font-family: 'Roboto', sans-serif;
   margin-right: 3px;
 }
 
@@ -858,6 +886,98 @@ label {
   background-color: #fcfbfc1f !important;
   margin-top: 0px;
   transition: 0.1s ease;
+}
+/* Background for the register page */
+#register-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh; /* Full height */
+  background: linear-gradient(
+    rgba(14, 29, 52, 0.8),
+    rgba(14, 29, 52, 0.6)
+  )
+}
+
+/* Register Card Styles */
+.register-card {
+  background-color: #ffffff; /* White background for the card */
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Subtle shadow effect */
+  max-width: 400px; /* Maximum width for the card */
+  width: 100%; /* Full width on smaller screens */
+  padding: 30px; /* Padding inside the card */
+  animation: fadeIn 0.5s; /* Fade-in effect */
+}
+
+/* Heading Styles */
+.register-card h2 {
+  text-align: center; /* Center the heading */
+  margin-bottom: 20px; /* Space below the heading */
+  font-size: 28px; /* Font size */
+}
+
+/* Form Group Styles */
+.register-card .form-group {
+  margin-bottom: 15px; /* Space between form groups */
+}
+
+/* Input Field Styles */
+.register-card .form-control {
+  width: 100%; /* Full width for input fields */
+  padding: 10px; /* Padding for inputs */
+  border: 1px solid #ccc; /* Standard border */
+  border-radius: 4px; /* Rounded corners */
+  transition: border-color 0.3s; /* Smooth transition on focus */
+}
+
+.register-card .form-control:focus {
+  border-color: #5288f4; /* Change border color on focus */
+  outline: none; /* Remove outline */
+}
+
+/* Button Styles */
+.register-card .btn {
+  border-radius: 25px; /* Rounded button corners */
+  padding: 10px; /* Button padding */
+  font-size: 1rem; /* Button font size */
+  background-color: #007bff; /* Primary button color */
+  border: none; /* Remove border */
+  transition: background-color 0.3s, transform 0.3s; /* Smooth transitions */
+  width: 100%; /* Full width button */
+  margin-top: 15px; /* Space above the button */
+}
+
+.register-card .btn:hover {
+  background-color: #0056b3; /* Darker color on hover */
+  transform: translateY(-2px); /* Slight lift effect on hover */
+}
+
+.register-card .btn:active {
+  background-color: #004494; /* Even darker color on active */
+  transform: translateY(0); /* Reset lift effect on active */
+}
+
+/* Sign In Link Styles */
+.register-card a {
+  color: #007bff; /* Link color */
+  text-decoration: none; /* No underline */
+}
+
+.register-card a:hover {
+  text-decoration: underline; /* Underline on hover */
+}
+
+/* Animation for the Card */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 

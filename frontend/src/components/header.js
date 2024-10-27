@@ -1,5 +1,6 @@
 import React from "react";
 
+import '../styles/style_home.css';
 export const Header = (props) => {
   return (
     <header id="header">

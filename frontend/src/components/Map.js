@@ -1,8 +1,9 @@
 import React from 'react';
 
+import '../styles/style_home.css';
 export const Map = () => {
     return (
-        <div className="map-container">
+        <div id = "map" className="map-container">
             <h2 className='section-title'>Our Location</h2>
             <iframe
                 title="Google Map"

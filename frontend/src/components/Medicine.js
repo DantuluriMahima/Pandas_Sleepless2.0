@@ -283,11 +283,12 @@ useEffect(() => {
               <section id="admin">
                 {/*--------Header section: contains navigation tab and institute logo--------*/}
       <header id="header" className="header fixed-top d-flex align-items-center">
-        <div className="container-fluid container-xl d-flex align-items-center justify-content-between">
+      <div className="container-fluid container-xl d-flex align-items-center justify-content-between" >
             <div className="logo d-flex align-items-center">
               <img src="/static/logo.svg.png" alt="IIT Dharwad Logo" />
               <h1>IIT Dharwad</h1>
-              <div className="link-container">
+            </div>
+            <div className="link-container">
                     <Link to="/admin" className="custom-link">Home</Link>
                     <span className="separator"> | </span>
                     <Link to="/admin/medicine" className="custom-link">Medicines</Link>
@@ -297,9 +298,7 @@ useEffect(() => {
                     <Link to="/admin/appointment" className="custom-link">Appointments</Link>
                     
                   </div>
-            </div>
-
-        </div>
+           </div>
         
         <nav className="header-nav ms-auto">
       <ul className="d-flex align-items-center list-unstyled m-4">
@@ -537,7 +536,7 @@ useEffect(() => {
             </div>
           </section>
         </main>
-        <footer id="footer" className="footer">
+        <footer id="footer" className="footer" style={{ width: '100%' }}>
 
             <div className="container">
             <div className="row gy-3">

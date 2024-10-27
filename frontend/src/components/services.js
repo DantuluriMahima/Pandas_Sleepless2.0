@@ -1,5 +1,6 @@
 import React from "react";
 
+import '../styles/style_home.css';
 export const Services = (props) => {
   return (
     <div id="services" className="text-center">

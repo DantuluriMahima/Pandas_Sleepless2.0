@@ -348,6 +348,7 @@ useEffect(() => {
             <div className="logo d-flex align-items-center">
               <img src="/static/logo.svg.png" alt="IIT Dharwad Logo" />
               <h1>IIT Dharwad</h1>
+              </div>
               <div className="link-container">
                     <Link to="/admin" className="custom-link">Home</Link>
                     <span className="separator"> | </span>
@@ -357,7 +358,7 @@ useEffect(() => {
                     <span className="separator"> | </span>
                     <Link to="/admin/appointment" className="custom-link">Appointments</Link>
                     
-                  </div>
+                  
             </div>
 
         </div>
@@ -592,7 +593,7 @@ useEffect(() => {
             </div>
           </section>
         </main>
-        <footer id="footer" className="footer">
+        <footer id="footer" className="footer" style={{ width: '100%' }}>
 
             <div className="container">
             <div className="row gy-3">

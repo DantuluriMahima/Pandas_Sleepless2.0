@@ -57,7 +57,8 @@ const AdminPage = () => {
           <div className="logo d-flex align-items-start">
           <img src="/static/logo.svg.png" alt="IIT Dharwad Logo" />
             <h1 style={{ marginBottom: '20px', marginLeft: '10px' }}>IIT Dharwad</h1>
-              <div className="link-container">
+            </div>
+            <div className="link-container">
                     <Link to="/admin" className="custom-link">Home</Link>
                     <span className="separator"> | </span>
                     <Link to="/admin/medicine" className="custom-link">Medicines</Link>
@@ -66,7 +67,8 @@ const AdminPage = () => {
                     <span className="separator"> | </span>
                     <Link to="/admin/appointment" className="custom-link">Appointments</Link>
                     
-                  </div>
+                  
+            </div>
             </div>
             <nav className="header-nav ms-auto">
               <ul className="d-flex align-items-center list-unstyled m-4">
@@ -116,7 +118,7 @@ const AdminPage = () => {
               </ul>
             </nav>
             <i className="bi bi-list mobile-nav-toggle"></i>
-          </div>
+          
         </header>
 
         <div className="container-fluid mt-8 pt-5">
@@ -162,7 +164,7 @@ const AdminPage = () => {
 </main>
 
 
-        <footer id="footer" className="footer">
+        <footer id="footer" className="footer" style={{ width: '100%' }}>
           <div className="container">
             <div className="row gy-3">
               <div className="col-lg-3 col-md-12 footer-info">

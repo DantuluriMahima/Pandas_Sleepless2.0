@@ -1,5 +1,6 @@
 import React from "react";
 
+import '../styles/style_home.css';
 export const Testimonials = (props) => {
   return (
     <div id="testimonials">
