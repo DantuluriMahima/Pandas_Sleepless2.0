@@ -345,6 +345,16 @@ const fetchData = async () => {
                     </option>
                 ))}
             </select>
+            
+            <label htmlFor="doctorId">Doctor:</label>
+            <select id="doctorId" onChange={handleDoctorChange} required style={{ marginBottom: '15px', width: '100%' }}>
+                <option value="">Select a Doctor</option>
+                {filteredDoctors.map((doctor, index) => (
+                    <option key={index} value={doctor}>
+                        {doctor}
+                    </option>
+                ))}
+            </select>
 
             <label htmlFor="time">Time:</label>
             <select id="time" required style={{ marginBottom: '15px', width: '100%' }}>
@@ -356,17 +366,6 @@ const fetchData = async () => {
                 ))}
             </select>
 
-            <label htmlFor="doctorId">Doctor:</label>
-            <select id="doctorId" onChange={handleDoctorChange} required style={{ marginBottom: '15px', width: '100%' }}>
-                <option value="">Select a Doctor</option>
-                {filteredDoctors.map((doctor, index) => (
-                    <option key={index} value={doctor}>
-                        {doctor}
-                    </option>
-                ))}
-            </select>
-
-            
             <button
                 type="submit"
                 style={{
