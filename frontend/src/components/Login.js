@@ -29,27 +29,18 @@ const Login = () => {
   
   const handleLoginClick = async (e) => {
     e.preventDefault();
-    try {
-      const response = await axios.post('http://localhost:5000/api/register/login', formData);
-     
-      if (response.data.auth) {
-        const response2 = await axios.get(`http://localhost:5000/api/register/search?category=roll&keyword=${formData.roll}`);
-        if (response2.data[0].position === 'Admin') {
-          alert('Login successful as User');
-          localStorage.setItem('token', response.data.token);
-          localStorage.setItem('userId', response.data.userId);
-          navigate('/admin');
-        } else {
-          alert('Unauthorized access');
-        }
-      } else {
-        alert('Login failed');
-      }
-    } catch (error) {
-      console.error(error);
-      alert('Error logging in');
+    
+    // Check if both roll and password are '1'
+    if (formData.roll === '1' && formData.password === '1') {
+        alert('Login successful as Admin');
+        localStorage.setItem('token', 'admin-token'); // You can set a dummy token for admin
+        navigate('/admin');
+    } else {
+        alert('Unauthorized access');
     }
-  };
+};
+
+  
 
   // Function to handle login for student or faculty with redirection based on user type
   const handleSubmit = async (event) => {
