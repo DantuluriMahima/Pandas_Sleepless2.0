@@ -5,14 +5,7 @@ import axios from 'axios';
 import '../styles/User.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
-
 const BookAppointment = () => {
-    // State for appointments and traffic level
-    const [appointments, setAppointments] = useState([]);
-    const [trafficLevel, setTrafficLevel] = useState('Low');
-    const [profile, setProfile] = useState([]);
-
-    // State for booking appointments
     const [schedule, setSchedule] = useState([]);
     const [doctors, setDoctors] = useState([]);
     const [dates, setDates] = useState([]);
@@ -20,107 +13,86 @@ const BookAppointment = () => {
     const [filteredDoctors, setFilteredDoctors] = useState([]);
     const [timeSlots, setTimeSlots] = useState([]);
     const [selectedDoctor, setSelectedDoctor] = useState('');
-
+   
     useEffect(() => {
-        // Fetch user profile
-        const fetchProfile = async () => {
-            try {
-                const token = localStorage.getItem('token');
-                const response = await fetch('http://localhost:5000/api/user/profile', {
-                    method: 'GET',
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                        'Content-Type': 'application/json',
-                    },
-                });
-                if (!response.ok) {
-                    throw new Error('Failed to fetch profile data');
-                }
-                const profileData = await response.json();
-                setProfile(profileData);
-            } catch (error) {
-                console.error('Error fetching profile:', error.message);
-            }
-        };
-
-        // Fetch appointments
-        const fetchAppointments = async () => {
-            try {
-                const response = await fetch('http://localhost:5000/api/appointments');
-                const data = await response.json();
-                const userAppointments = data.filter(
-                    (appointment) => appointment.roll === profile.roll
-                );
-                setAppointments(userAppointments);
-                calculateTrafficLevel(data);
-            } catch (error) {
-                console.error('Error fetching appointments:', error);
-            }
-        };
-
-        // Calculate traffic level
-        const calculateTrafficLevel = (appointments) => {
-            const currentHour = new Date().getHours();
-            const hourCount = appointments.filter((appointment) => {
-                const appointmentHour = new Date(`1970-01-01T${appointment.timeSlot}`).getHours();
-                return appointmentHour === currentHour;
-            }).length;
-
-            if (hourCount > 10) {
-                setTrafficLevel('High');
-            } else if (hourCount >= 5) {
-                setTrafficLevel('Medium');
-            } else {
-                setTrafficLevel('Low');
-            }
-        };
-
-        //fetchProfile();
-        //fetchAppointments();
-    }, [profile.roll]);
-
-    // Fetch schedule data for booking appointments
-    const fetchScheduleData = async () => {
-        try {
+        const fetchData = async () => {
+           
             const response = await fetch('http://localhost:5000/api/schedule');
-            const data = response.ok ? await response.json() : [];
+            if (!response.ok) throw new Error('Failed to fetch schedule');
+        
+            const data = await response.json();
+            
+            // Transform the raw data if it's an array of arrays
             const formattedData = data.slice(2).map(row => ({
                 siNo: row[0],
                 name: row[1],
                 qualification: row[2],
                 specialization: row[3],
                 date: row[4],
-                time: row[5]
+                time: row[5] // Assuming time is a range like "9:00-12:00"
             }));
-
+            
             setSchedule(formattedData);
 
+            // Extract unique doctor names for the dropdown
             const doctorNames = formattedData
                 .filter(row => row.name && row.name !== 'Doctor Unavailable Today')
                 .map(row => row.name);
-            setDoctors([...new Set(doctorNames)]);
+
+            setDoctors([...new Set(doctorNames)]); // Remove duplicates
 
             const uniqueDates = formattedData
                 .filter(row => row.date)
                 .map(row => row.date);
-            setDates([...new Set(uniqueDates)]);
-        } catch (error) {
-            console.error('Error fetching schedule:', error);
-            setSchedule([]);
-            setDoctors([]);
-            setDates([]);
-        }
-    };
 
-    useEffect(() => {
-        fetchScheduleData();
+            setDates([...new Set(uniqueDates)]); // Remove duplicates
+        };
+        fetchData();
     }, []);
+/*
+const fetchData = async () => {
+    try {
+        const response = await fetch('http://localhost:5000/api/schedule');
+        const data = response.ok ? await response.json() : []; // Use empty array if fetch fails
 
+        // Transform the raw data if it's an array of arrays
+        const formattedData = data.slice(2).map(row => ({
+            siNo: row[0],
+            name: row[1],
+            qualification: row[2],
+            specialization: row[3],
+            date: row[4],
+            time: row[5]
+        }));
+        
+        setSchedule(formattedData);
+
+        // Extract unique doctor names for the dropdown
+        const doctorNames = formattedData
+            .filter(row => row.name && row.name !== 'Doctor Unavailable Today')
+            .map(row => row.name);
+        
+        setDoctors([...new Set(doctorNames)]); // Remove duplicates
+        
+        const uniqueDates = formattedData
+            .filter(row => row.date)
+            .map(row => row.date);
+        
+        setDates([...new Set(uniqueDates)]); // Remove duplicates
+    } catch (error) {
+        console.error('Error fetching schedule:', error);
+        setSchedule([]); // Ensure schedule is empty on error
+        setDoctors([]); // Reset doctors
+        setDates([]); // Reset dates
+    }
+};*/
     useEffect(() => {
+        // Filter doctors based on the selected date
         const availableDoctors = schedule
             .filter(row => row.date === selectedDate)
             .map(row => row.name);
-        setFilteredDoctors([...new Set(availableDoctors)]);
+
+        setFilteredDoctors([...new Set(availableDoctors)]); // Remove duplicates
     }, [selectedDate, schedule]);
 
     useEffect(() => {
@@ -133,66 +105,99 @@ const BookAppointment = () => {
     }, [selectedDoctor, selectedDate, schedule]);
 
     const generateTimeSlots = (doctorData) => {
-        const timeRange = doctorData.time;
-        if (!timeRange || !timeRange.includes("-")) return;
-
-        const [startTime, endTime] = timeRange.split("-").map(time => time.trim());
-        const start = new Date(`1970-01-01T${startTime.padStart(5, "0")}:00`);
-        const end = new Date(`1970-01-01T${endTime.padStart(5, "0")}:00`);
-        const slots = [];
-        const slotDuration = doctorData.specialization === 'General Physician' ? 10 : 15;
-
-        for (let time = new Date(start); time < end; time.setMinutes(time.getMinutes() + slotDuration)) {
-            slots.push(time.toTimeString().slice(0, 5));
+        const timeRange = doctorData.time; // Example: "1:30-3:00"
+        
+        // Check if time range exists and is correctly formatted
+        if (!timeRange || !timeRange.includes("-")) {
+            console.error("Invalid time range:", timeRange);
+            return;
         }
+    
+        const [startTime, endTime] = timeRange.split("-").map(time => time.trim());
+    
+        // Parse start and end times
+        const start = new Date(`1970-01-01T${startTime.padStart(5, "0")}:00`); // Add leading zero if needed
+        const end = new Date(`1970-01-01T${endTime.padStart(5, "0")}:00`);
+        
+        // Check if start and end are valid
+        if (isNaN(start) || isNaN(end)) {
+            console.error("Invalid start or end time:", start, end);
+            return;
+        }
+        
+        const slots = [];
+        const slotDuration = doctorData.specialization === 'General Physician' ? 10 : 15; // Minutes
+    
+        // Generate slots
+        for (let time = new Date(start); time < end; time.setMinutes(time.getMinutes() + slotDuration)) {
+            const slotTime = time.toTimeString().slice(0, 5); // HH:MM format
+            slots.push(slotTime);
+        }
+    
+        // Check if slots were created successfully
+        if (slots.length === 0) {
+            console.warn("No slots generated for time range:", timeRange);
+        } else {
+            console.log("Generated slots:", slots); // Debugging
+        }
+    
         setTimeSlots(slots);
     };
+    
+    
 
     const handleDateChange = (event) => {
         setSelectedDate(event.target.value);
-        setSelectedDoctor('');
-        setTimeSlots([]);
+        setSelectedDoctor(''); // Reset doctor selection when date changes
+        setTimeSlots([]); // Reset time slots
     };
 
     const handleDoctorChange = (event) => {
         setSelectedDoctor(event.target.value);
-        setTimeSlots([]);
+        setTimeSlots([]); // Reset time slots when doctor changes
     };
-
     const handleSubmit = async (event) => {
         event.preventDefault();
+    
         const email = document.getElementById('patientId').value;
         const doctorName = selectedDoctor;
         const date = selectedDate;
         const timeSlot = document.getElementById('time').value;
-
+    
+        // Check if all fields are provided
         if (!email || !doctorName || !date || !timeSlot) {
+            console.error("All fields are required.");
             alert("Please fill in all required fields.");
             return;
         }
-
+    
+        console.log("Form submitted", { email, doctorName, date, timeSlot });
+    
         try {
             const response = await fetch('http://localhost:5000/api/book-appointment', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email, doctorName, date, timeSlot }),
+                body: JSON.stringify({
+                    email,
+                    doctorName,
+                    date,
+                    timeSlot,
+                }),
             });
+    
             const result = await response.json();
-            alert(result.message || "Booking successful.");
+    
+            if (response.ok) {
+                alert(result.message);
+            } else {
+                console.error("Error from server:", result.error);
+                alert(result.error || "An error occurred. Please try again.");
+            }
         } catch (error) {
+            console.error("Error submitting form:", error);
             alert("An error occurred. Please check your network and try again.");
         }
     };
-
-    const handleDelete = async (email, timeSlot) => {
-        try {
-            const response = await axios.delete(`http://localhost:5000/api/${encodeURIComponent(email)}/${encodeURIComponent(timeSlot)}`);
-            //fetchAppointments();
-        } catch (error) {
-            console.error('Error deleting item:', error);
-        }
-    };
-
     return (
         <section id="userhome">
             <header id="header" className="header fixed-top d-flex align-items-center">

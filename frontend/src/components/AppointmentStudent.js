@@ -11,7 +11,7 @@ const AppointmentStudent = () => {
         const fetchProfile = async () => {
           try {
             const token = localStorage.getItem('token');
-            const response = await fetch('http://localhost:5000/api/user/profile', {
+            const response = await fetch('http://localhost:5000/api/register/profile', {
               method: 'GET',
               headers: {
                 Authorization: `Bearer ${token}`,
