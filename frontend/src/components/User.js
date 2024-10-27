@@ -313,6 +313,7 @@ const fetchData = async () => {
                     <label htmlFor="medicineId">Medicine ID:</label>
                     <input type="text" id="medicineId" required />
                     <button type="submit">Cancel Medicine</button>
+                    <a href="https://docs.google.com/spreadsheets/d/1zouIz0bX8YG-UVBTwXXTreddsyR29TTPQL5pczmFKnw/edit?gid=0#gid=0"><em>Sheet link</em></a>
                 </form>
             </div>
         
