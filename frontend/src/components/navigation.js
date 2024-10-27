@@ -1,6 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
+import '../styles/style_home.css';
 export const Navigation = (props) => {
   const navigate = useNavigate();
   const handleLoginClick = () => {
@@ -55,6 +56,11 @@ export const Navigation = (props) => {
             <li>
               <a href="#team" className="page-scroll">
                 Team
+              </a>
+            </li>
+            <li>
+              <a href="#Map" className="page-scroll">
+                Map
               </a>
             </li>
             <li>

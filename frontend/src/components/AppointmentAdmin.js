@@ -196,7 +196,7 @@ const Appointment = () => {
     <div>
       <section id="admin">
       <header id="header" className="header fixed-top d-flex align-items-center">
-        <div className="container-fluid container-xl d-flex align-items-center justify-content-between">
+        <div className="container-fluid container-xl d-flex align-items-center justify-content-between" >
             <div className="logo d-flex align-items-center">
               <img src="/static/logo.svg.png" alt="IIT Dharwad Logo" />
               <h1>IIT Dharwad</h1>
@@ -262,7 +262,7 @@ const Appointment = () => {
            <i className="bi bi-list toggle-sidebar-btn"></i>
         </header>
         
-        <main id="main" className="main" >
+        <main id="main" className="main" style={{ height: '100vh', width: '100%' }} >
 
         <div className="pagetitle">
         <h1>Appointments</h1>
@@ -304,7 +304,7 @@ const Appointment = () => {
         </main>
 
       
-        <footer id="footer" className="footer">
+        <footer id="footer" className="footer" style={{ width: '100%' }}>
 
             <div className="container">
             <div className="row gy-3">
