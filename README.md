@@ -15,12 +15,11 @@ WellnessConnect provides a user-friendly interface for both students and admins.
 
 ## Features
 - User authentication and authorization
-- Real-time doctor and ambulance availability
+- Real-time doctor availability
 - Traffic indicator for appointment times
 - Medicine inventory management
 - Appointment booking and tracking
 - Responsive design
-- Emergency contact information
 - Admin and student dashboards with distinct functionalities
 
 ## Installation
@@ -35,17 +34,7 @@ WellnessConnect provides a user-friendly interface for both students and admins.
     git clone https://github.com/DantuluriMahima/Pandas_Sleepless2.0.git
     ```
 
-2. Set up the MongoDB database:
-    - Create a database named `wellness_connect` and necessary collections:
-        ```javascript
-        use wellness_connect
-        db.createCollection("doctors")
-        db.createCollection("appointments")
-        db.createCollection("medicines")
-        // Add data using MongoDB Compass or terminal commands
-        ```
-
-3. Starting frontend:
+2. Starting frontend:
 
     - Change directory:
         ```bash
@@ -62,7 +51,7 @@ WellnessConnect provides a user-friendly interface for both students and admins.
         npm start
         ```
 
-4. Similarly for backend:
+3. Similarly for backend:
 
     - Change directory:
         ```bash
@@ -79,11 +68,10 @@ WellnessConnect provides a user-friendly interface for both students and admins.
         npm start
         ```
 
-5. Open your browser and navigate to `http://localhost:3000`.
+4. Open your browser and navigate to `http://localhost:3000`.
 
 ## Usage
 - **Home Page:** The landing page where users can access all features of the application.
-- **Emergency Contacts:** Provides quick access to emergency numbers for doctors and ambulances.
 - **Login Page:** Allows users to log in as either students or admins.
     - **Student Login:** Use roll number `220010034` and password `mongoose`.
     - **Admin Login:** Use roll number `1` and password `1`.
