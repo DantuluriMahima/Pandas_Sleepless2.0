@@ -80,14 +80,6 @@ const updatePatientInDatabase = async (patientId, updatedPatient) => {
     setNewPatient({ ...newPatient, medicines: updatedMedicines });
   };
 
-  // Handle change for each medicine row
-  const handleMedicineChange = (index, e) => {
-    const { name, value } = e.target;
-    const updatedMedicines = newPatient.medicines.map((medicine, i) => 
-      i === index ? { ...medicine, [name]: value } : medicine
-    );
-    setNewPatient((prev) => ({ ...prev, medicines: updatedMedicines }));
-  };
   
   // Add a new medicine row
   const addMedicineRow = () => {
@@ -422,7 +414,7 @@ useEffect(() => {
     </nav>
         </header>
         
-        <main id="main" className="main" style={{ height: '100vh', width: '100%' }}>
+        <main id="main" className="main" style={{ height: '90vh', width: '100%', marginBottom: '5cm' }}>
           <div className="pagetitle">
             <h1>Medicine Data</h1>
             <nav>
