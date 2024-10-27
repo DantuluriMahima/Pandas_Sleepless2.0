@@ -9,6 +9,7 @@ import AppointmentStudent from './components/AppointmentStudent.js';
 import './App.css';
 import Login from './components/Login';
 import User from './components/User';
+import BookAppointment from './components/BookAppointment';
 import { useState, useEffect } from "react";
 import { Navigation } from "./components/navigation";
 import { Header } from "./components/header";
@@ -43,6 +44,7 @@ const App = () => {
         <Route path="/admin/pendingmeds" element={<PendingMedicines />} />
         <Route path="/admin/appointment" element={<AppointmentAdmin />} />
         <Route path="/Userpage" element={<User />} />
+        <Route path="/Userpage/BookAppointment" element={<BookAppointment />} />
         <Route path="/Userpage/appointment" element={<AppointmentStudent />} />
         <Route path="/" element={
           <div>
