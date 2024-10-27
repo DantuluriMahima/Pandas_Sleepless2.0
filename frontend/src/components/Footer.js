@@ -1,7 +1,6 @@
 import React from 'react';
 
 
-import '../styles/style_home.css';
 
 export const Footer = () => {
     return (

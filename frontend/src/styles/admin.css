@@ -1571,3 +1571,26 @@
   font-size: 18px;
   margin: 9px; 
 }
+
+#admin button {
+  background-color: white;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#admin button:hover {
+  background-color: #45a049;
+}
+#userhome  .header .search-form button {
+  border: 0;
+  padding: 0;
+  margin-left: -30px;
+  background: none;
+}
+
+#userhome  .header .search-form button i {
+  color: white;
+}

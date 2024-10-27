@@ -370,14 +370,24 @@ useEffect(() => {
             menuAlign="right"
             title={
               <span className="nav-link nav-profile d-flex align-items-center pe-0">
-                <Image
-                  src="/static/adminpage/profile.png"
-                  alt="Profile"
-                  className="rounded-circle me-2"
-                />
-                <span className="d-none d-md-block">
-                  User
-                </span>
+                <button 
+          className="btn d-flex align-items-center" 
+          style={{ 
+            border: 'none', 
+            backgroundColor: 'green', 
+            color: 'white', 
+            borderRadius: '5px', // Make it circular
+            padding: '5px' // Adjust padding as needed
+          }}
+        >
+          <Image
+            src="../../img/profile.png"
+            alt="Profile"
+            className="rounded-circle me-2"
+            style={{ width: '30px', height: '30px' }} // Adjust size of the image
+          />
+          <span className="d-none d-md-block">User</span>
+        </button>
               </span>
             }
             id="dropdown-profile"
@@ -410,7 +420,6 @@ useEffect(() => {
         </li>
       </ul>
     </nav>
-           <i className="bi bi-list toggle-sidebar-btn"></i>
         </header>
         
         <main id="main" className="main" style={{ height: '100vh', width: '100%' }}>

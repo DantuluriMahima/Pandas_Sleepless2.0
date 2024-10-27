@@ -8,25 +8,23 @@ const AppointmentStudent = () => {
     const [profile, setProfile] = useState({});
     useEffect(() => {
         const fetchProfile = async () => {
-            try {
-                const token = localStorage.getItem('token');
-                console.log("Token:", token);
-                const response = await fetch('http://localhost:5000/api/register/profile', {
-                    method: 'GET',
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                        'Content-Type': 'application/json',
-                    },
-                });
-                if (!response.ok) {
-                    throw new Error('Failed to fetch profile data');
-                }
-                const profileData = await response.json();
-                setProfile(profileData);  // Set fetched profile data
-                console.log("ProfileData:", profileData);
-            } catch (error) {
-                console.error('Error fetching profile:', error.message);
+          try {
+            const token = localStorage.getItem('token');
+            const response = await fetch('http://localhost:5000/api/user/profile', {
+              method: 'GET',
+              headers: {
+                Authorization: `Bearer ${token}`,
+                'Content-Type': 'application/json',
+              },
+            });
+            if (!response.ok) {
+              throw new Error('Failed to fetch profile data');
             }
+            const profileData = await response.json();
+            setProfile(profileData);
+          } catch (error) {
+            console.error('Error fetching profile:', error.message);
+          }
         };
     
         fetchProfile();
@@ -37,7 +35,7 @@ const AppointmentStudent = () => {
     }, [profile]);
     const fetchAppointments = async () => {
         try {
-            const response = await fetch('http://localhost:5000/api/appointments');
+            const response = await fetch('http://localhost:5000/api/userappointments');
             const data = await response.json();
             const userAppointments = data.filter(
                 (appointment) => appointment.email === profile.email
@@ -55,12 +53,26 @@ const AppointmentStudent = () => {
     };
     
     useEffect(() => {
-        // Only fetch appointments if profile is available and has the email property
-        if (profile.email) {
-            fetchAppointments();
-        }
-    }, [profile]);
-    
+        // Fetch the appointments from the API
+        const fetchAppointments = async () => {
+            try {
+                const response = await fetch('http://localhost:5000/api/appointments');
+                const data = await response.json();
+                const userAppointments = data.filter(
+                    (appointment) => appointment.roll === profile.roll
+                );
+                setAppointments(userAppointments);
+
+                // Calculate traffic level based on appointments data
+                calculateTrafficLevel(data);
+            } catch (error) {
+                console.error('Error fetching appointments:', error);
+            }
+        };
+
+        fetchAppointments();
+    }, []);
+
     const calculateTrafficLevel = (appointments) => {
         const currentHour = new Date().getHours(); // Get the current hour
 

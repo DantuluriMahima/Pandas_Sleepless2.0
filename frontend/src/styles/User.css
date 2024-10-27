@@ -2,13 +2,18 @@
 
 #userhome body {
     font-family: 'Roboto', sans-serif;
+    background-color: black;
 }
-
+#userhome .main{
+    padding-top: 10%;
+    background-color: (rgba(42, 50, 63, 0.86));
+}
 #userhome .container {
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 20px;
+    background-color: (rgba(14, 29, 52, 0.86));
 }
 
 #userhome h2 {
@@ -33,7 +38,7 @@
 }
 
 #userhome button {
-    background-color: #4CAF50;
+    background-color: rgba(14, 29, 52, 0.86);
     color: white;
     padding: 10px;
     border: none;
@@ -42,8 +47,9 @@
 }
 
 #userhome button:hover {
-    background-color: #45a049;
+    background-color: rgba(14, 29, 52, 0.86);
 }
+
 #userhome .table-container {
     max-height: 300px; /* Adjust height as needed */
     overflow-y: auto;
@@ -180,3 +186,55 @@
   #userhome  .header .search-form button i {
     color: white;
   }
+
+  #userhome .footer {
+    background-color: #1A2530;
+    color: black;
+    padding: 20px 0;
+}
+
+.footer .container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.footer-info h3,
+.footer h4 {
+    color: white;
+    margin-bottom: 15px;
+    font-size: 18px;
+}
+
+.footer-info p, 
+.footer-links ul,
+.footer-links ul li {
+    font-size: 14px;
+    line-height: 1.6;
+    color: black;
+}
+
+.footer-links ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-links ul li a {
+    color: black;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer-links ul li a:hover {
+    color: #80aaff;
+}
+
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .footer .container {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
