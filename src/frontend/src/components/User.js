@@ -14,24 +14,24 @@ const DoctorSchedule = () => {
     const [selectedDoctor, setSelectedDoctor] = useState('');
     const [profile, setProfile] = useState({});
     const [Patient, setPatient] = useState([]);
-    const updatePatientInDatabase = async (patientId, updatedPatient) => {
-        try {
-          await axios.put(`http://localhost:5000/api/pendingdb/${patientId}`, updatedPatient); 
-        } catch (error) {
-          console.error('Error updating patient:', error);
+    
+      
+    useEffect(() => {
+        if (profile) {
+            fetchPatients();
         }
-      };
-      
-      
-        useEffect(() => {
-        fetchPatients();
-        }, []);
+    }, [profile]);
       
       //Function to retrieve database information
         const fetchPatients = async () => {
           try {
             const response = await axios.get('http://localhost:5000/api/pendingdb');
-            setPatient(response.data);
+            const data = await response.data;
+            const userAppointments = data.filter(
+                (appointment) => appointment.email === profile.email
+            );
+            setPatient(userAppointments);
+            console.log(Patient);
           } catch (error) {
             console.error('Error fetching patients:', error);
           }
@@ -42,7 +42,7 @@ const DoctorSchedule = () => {
           
             if (confirmCancel) {
               try {
-                const response = await fetch(`/api/pending/${patientId}/medicines/${medicineIndex}`, {
+                const response = await fetch(`http://localhost:5000/api/pendingdb/${patientId}/medicines/${medicineIndex}`, {
                   method: 'DELETE',
                 });
           
@@ -53,24 +53,24 @@ const DoctorSchedule = () => {
                 const data = await response.json();
                 alert(data.message); // Notify the user of success
           
-                // Optionally, refresh the state to reflect changes (depending on your state management)
+                // Update the local state to remove the cancelled medicine
                 setPatient(prevEntries => 
                   prevEntries.map(patient => {
                     if (patient._id === patientId) {
-                      // Update the specific medicine's checked status
-                      const updatedMedicines = patient.medicines.map((medicine, index) => 
-                        index === medicineIndex ? { ...medicine, checked: true } : medicine
-                      );
+                      // Remove the cancelled medicine from the medicines array
+                      const updatedMedicines = patient.medicines.filter((_, index) => index !== medicineIndex);
                       return { ...patient, medicines: updatedMedicines };
                     }
                     return patient;
                   })
                 );
+          
               } catch (error) {
                 alert('Error: ' + error.message);
               }
             }
           };
+          
           
     useEffect(() => {
         const fetchProfile = async () => {

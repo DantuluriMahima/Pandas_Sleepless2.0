@@ -391,7 +391,7 @@ useEffect(() => {
     </nav>
         </header>
         
-        <main id="main" className="main" style={{ height: '90vh', width: '100%', marginBottom: '5cm' }}>
+        <main id="main" className="main" style={{ height: '90vh', width: '100%', marginBottom: '10cm' }}>
           <div className="pagetitle">
             <h1>Medicine Data</h1>
             <nav>

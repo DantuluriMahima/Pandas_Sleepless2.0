@@ -40,6 +40,26 @@ router.delete('/:id/medicines/:medicineIndex', async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 });
+router.delete('/:patientId/medicines/:medicineIndex', async (req, res) => {
+  const { patientId, medicineIndex } = req.params;
+
+  try {
+      // Find the patient by ID
+      const patient = await PatientModel.findById(patientId);
+      if (!patient) {
+          return res.status(404).json({ message: 'Patient not found' });
+      }
+
+      // Remove the medicine from the medicines array
+      patient.medicines.splice(medicineIndex, 1);
+      await patient.save();
+
+      res.json({ message: 'Medicine cancelled successfully' });
+  } catch (error) {
+      console.error('Error cancelling medicine:', error);
+      res.status(500).json({ message: 'Error cancelling medicine' });
+  }
+});
 
 // POST a new pending entry
 router.post('/', [
