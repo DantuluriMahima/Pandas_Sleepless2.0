@@ -138,16 +138,7 @@ const updatePatientInDatabase = async (patientId, updatedPatient) => {
       }
     };
     
-  //function to delete any user
-  const handleDeleteMedicine = async (id) => {
-    try {
-      await axios.delete(`http://localhost:5000/api/pendingdb/${id}`);
-      setPatient(Patient.filter(medicine => medicine._id !== id));
-      fetchPatients(); // Refresh the list after deletion
-    } catch (error) {
-      console.error('Error deleting entry:', error);
-    }
-  };
+  
 
   //search feature in the table
   const [searchTerm, setSearchTerm] = useState('');

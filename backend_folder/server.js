@@ -36,30 +36,31 @@ const appointmentSchema = new mongoose.Schema({
     date: String,
 });
 const Appointment = mongoose.model('Appointment', appointmentSchema);
+const SPREADSHEET_ID = '1zouIz0bX8YG-UVBTwXXTreddsyR29TTPQL5pczmFKnw'; // Make sure this line is included
+const RANGE = 'Sheet1!A1:F100'; // Define RANGE correctly
 
-// Google Sheets API Setup
-const SERVICE_ACCOUNT_FILE = './rising-woods-439809-h3-0f3c2612b9c1.json';
-const SPREADSHEET_ID = '1zouIz0bX8YG-UVBTwXXTreddsyR29TTPQL5pczmFKnw';
-const RANGE = 'Sheet1!A1:F10';
+
 const sheets = google.sheets('v4');
 const auth = new google.auth.GoogleAuth({
-    keyFile: SERVICE_ACCOUNT_FILE,
+    credentials: JSON.parse(Buffer.from(process.env.GOOGLE_CLOUD_CREDENTIALS, 'base64').toString('utf-8')),
     scopes: ['https://www.googleapis.com/auth/spreadsheets'],
 });
+
 
 // Endpoint to fetch schedule data from Google Sheets
 app.get('/api/schedule', async (req, res) => {
     try {
         const authClient = await auth.getClient();
+        const sheets = google.sheets({ version: 'v4', auth: authClient });
+        
         const response = await sheets.spreadsheets.values.get({
-            auth: authClient,
             spreadsheetId: SPREADSHEET_ID,
             range: RANGE,
         });
         res.json(response.data.values);
     } catch (error) {
-        console.error('Error fetching data from Google Sheets:', error);
-        res.status(500).json({ error: 'Error fetching data' });
+        console.error('Error fetching data from Google Sheets:', error.message); // Log the error message
+        res.status(500).json({ error: 'Error fetching data', details: error.message }); // Include details in response
     }
 });
 app.get('/api/appointments', async (req, res) => {
