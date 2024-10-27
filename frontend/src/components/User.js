@@ -14,43 +14,7 @@ const DoctorSchedule = () => {
     const [filteredDoctors, setFilteredDoctors] = useState([]);
     const [timeSlots, setTimeSlots] = useState([]);
     const [selectedDoctor, setSelectedDoctor] = useState('');
-   /* 
-    useEffect(() => {
-        const fetchData = async () => {
-           
-            const response = await fetch('http://localhost:5000/api/schedule');
-            if (!response.ok) throw new Error('Failed to fetch schedule');
-        
-            const data = await response.json();
-            
-            // Transform the raw data if it's an array of arrays
-            const formattedData = data.slice(2).map(row => ({
-                siNo: row[0],
-                name: row[1],
-                qualification: row[2],
-                specialization: row[3],
-                date: row[4],
-                time: row[5] // Assuming time is a range like "9:00-12:00"
-            }));
-            
-            setSchedule(formattedData);
-
-            // Extract unique doctor names for the dropdown
-            const doctorNames = formattedData
-                .filter(row => row.name && row.name !== 'Doctor Unavailable Today')
-                .map(row => row.name);
-
-            setDoctors([...new Set(doctorNames)]); // Remove duplicates
-
-            const uniqueDates = formattedData
-                .filter(row => row.date)
-                .map(row => row.date);
-
-            setDates([...new Set(uniqueDates)]); // Remove duplicates
-        };
-        fetchData();
-    }, []);
-*/
+   
 const fetchData = async () => {
     try {
         const response = await fetch('http://localhost:5000/api/schedule');

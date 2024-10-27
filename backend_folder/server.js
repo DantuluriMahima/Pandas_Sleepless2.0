@@ -71,6 +71,22 @@ app.get('/api/appointments', async (req, res) => {
         res.status(500).json({ error: 'Failed to fetch appointments' });
     }
 });
+app.get('/api/userappointments', async (req, res) => {
+    const { email } = req.query; // Extract email from query parameters
+
+    try {
+        // If email is provided, filter appointments by email; otherwise, return all appointments
+        const appointments = email
+            ? await Appointment.find({ email })
+            : await Appointment.find();
+        
+        res.json(appointments);
+    } catch (error) {
+        console.error('Error fetching appointments:', error);
+        res.status(500).json({ error: 'Failed to fetch appointments' });
+    }
+});
+
 
 app.post('/api/book-appointment', async (req, res) => {
   const { email, doctorName, timeSlot, date } = req.body;
