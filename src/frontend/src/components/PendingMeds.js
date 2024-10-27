@@ -80,14 +80,6 @@ const updatePatientInDatabase = async (patientId, updatedPatient) => {
     setNewPatient({ ...newPatient, medicines: updatedMedicines });
   };
 
-  // Handle change for each medicine row
-  const handleMedicineChange = (index, e) => {
-    const { name, value } = e.target;
-    const updatedMedicines = newPatient.medicines.map((medicine, i) => 
-      i === index ? { ...medicine, [name]: value } : medicine
-    );
-    setNewPatient((prev) => ({ ...prev, medicines: updatedMedicines }));
-  };
   
   // Add a new medicine row
   const addMedicineRow = () => {
@@ -146,16 +138,7 @@ const updatePatientInDatabase = async (patientId, updatedPatient) => {
       }
     };
     
-  //function to delete any user
-  const handleDeleteMedicine = async (id) => {
-    try {
-      await axios.delete(`http://localhost:5000/api/pendingdb/${id}`);
-      setPatient(Patient.filter(medicine => medicine._id !== id));
-      fetchPatients(); // Refresh the list after deletion
-    } catch (error) {
-      console.error('Error deleting entry:', error);
-    }
-  };
+  
 
   //search feature in the table
   const [searchTerm, setSearchTerm] = useState('');
@@ -397,20 +380,6 @@ useEffect(() => {
             </Dropdown.Header>
             <Dropdown.Divider />
             <Dropdown.Item>
-              <Link className="dropdown-item d-flex align-items-center" to="/admin/profile">
-                <i className="bi bi-person"></i>
-                <span>My Profile</span>
-              </Link>
-            </Dropdown.Item>
-            <Dropdown.Divider />
-            <Dropdown.Item>
-              <Link className="dropdown-item d-flex align-items-center" to="/admin/studentprofile">
-                <i className="bi bi-gear"></i>
-                <span>Account Settings</span>
-              </Link>
-            </Dropdown.Item>
-            <Dropdown.Divider />
-            <Dropdown.Item>
               <Link className="dropdown-item d-flex align-items-center" to="/Login">
                 <i className="bi bi-box-arrow-right"></i>
                 <span>Sign Out</span>
@@ -422,7 +391,7 @@ useEffect(() => {
     </nav>
         </header>
         
-        <main id="main" className="main" style={{ height: '100vh', width: '100%' }}>
+        <main id="main" className="main" style={{ height: '90vh', width: '100%', marginBottom: '5cm' }}>
           <div className="pagetitle">
             <h1>Medicine Data</h1>
             <nav>
