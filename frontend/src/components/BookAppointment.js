@@ -78,7 +78,7 @@ const BookAppointment = () => {
         };
         fetchData();
     }, []);
-/*
+
 const fetchData = async () => {
     try {
         const response = await fetch('http://localhost:5000/api/schedule');
@@ -114,7 +114,7 @@ const fetchData = async () => {
         setDoctors([]); // Reset doctors
         setDates([]); // Reset dates
     }
-};*/
+};
     useEffect(() => {
         // Filter doctors based on the selected date
         const availableDoctors = schedule
