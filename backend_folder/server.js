@@ -131,12 +131,12 @@ app.post('/api/book-appointment', async (req, res) => {
 });
 app.delete('/api/:email/:timeSlot', async (req, res) => {
     try {
-        console.log("here");
+      //  console.log("here");
       const { email, timeSlot } = req.params;
   
       const deletedIssue = await Appointment.findOneAndDelete({ email: decodeURIComponent(email), timeSlot: decodeURIComponent(timeSlot) });
   
-      console.log("here2");
+    //  console.log("here2");
       if (!deletedIssue) {
         return res.status(404).json({ message: 'Entry not found' });
       }

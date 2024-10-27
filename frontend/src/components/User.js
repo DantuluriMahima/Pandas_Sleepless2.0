@@ -14,7 +14,36 @@ const DoctorSchedule = () => {
     const [filteredDoctors, setFilteredDoctors] = useState([]);
     const [timeSlots, setTimeSlots] = useState([]);
     const [selectedDoctor, setSelectedDoctor] = useState('');
-   
+    const [profile, setProfile] = useState({});
+    useEffect(() => {
+        const fetchProfile = async () => {
+            try {
+                const token = localStorage.getItem('token');
+                console.log("Token:", token);
+                const response = await fetch('http://localhost:5000/api/register/profile', {
+                    method: 'GET',
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                        'Content-Type': 'application/json',
+                    },
+                });
+                if (!response.ok) {
+                    throw new Error('Failed to fetch profile data');
+                }
+                const profileData = await response.json();
+                setProfile(profileData);  // Set fetched profile data
+                console.log("ProfileData:", profileData);
+            } catch (error) {
+                console.error('Error fetching profile:', error.message);
+            }
+        };
+    
+        fetchProfile();
+    }, []);
+    
+    useEffect(() => {
+        console.log("Updated profile state:", profile);
+    }, [profile]);
     useEffect(() => {
         const fetchData = async () => {
            
