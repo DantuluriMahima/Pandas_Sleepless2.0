@@ -113,7 +113,24 @@ app.post('/api/book-appointment', async (req, res) => {
       res.status(500).json({ error: 'Failed to book appointment' });
   }
 });
-
+app.delete('/api/:email/:timeSlot', async (req, res) => {
+    try {
+        console.log("here");
+      const { email, timeSlot } = req.params;
+  
+      const deletedIssue = await Appointment.findOneAndDelete({ email: decodeURIComponent(email), timeSlot: decodeURIComponent(timeSlot) });
+  
+      console.log("here2");
+      if (!deletedIssue) {
+        return res.status(404).json({ message: 'Entry not found' });
+      }
+      res.json({ message: 'entry deleted' });
+    } catch (err) {
+      console.error('Error:', err);
+      res.status(500).json({ message: err.message });
+    }
+  });
+  
 
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);

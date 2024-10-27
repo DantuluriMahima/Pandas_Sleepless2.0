@@ -14,7 +14,7 @@ const DoctorSchedule = () => {
     const [filteredDoctors, setFilteredDoctors] = useState([]);
     const [timeSlots, setTimeSlots] = useState([]);
     const [selectedDoctor, setSelectedDoctor] = useState('');
-   /* 
+   
     useEffect(() => {
         const fetchData = async () => {
            
@@ -50,7 +50,7 @@ const DoctorSchedule = () => {
         };
         fetchData();
     }, []);
-*/
+/*
 const fetchData = async () => {
     try {
         const response = await fetch('http://localhost:5000/api/schedule');
@@ -86,7 +86,7 @@ const fetchData = async () => {
         setDoctors([]); // Reset doctors
         setDates([]); // Reset dates
     }
-};
+};*/
     useEffect(() => {
         // Filter doctors based on the selected date
         const availableDoctors = schedule
@@ -210,13 +210,9 @@ const fetchData = async () => {
               <h1>IIT Dharwad</h1>
             </div>
             <div className="link-container">
-                    <Link to="/admin" className="custom-link">Home</Link>
+                    <Link to="/UserPage" className="custom-link">Home</Link>
                     <span className="separator"> | </span>
-                    <Link to="/admin/medicine" className="custom-link">Medicines</Link>
-                    <span className="separator"> | </span>
-                    <Link to="/admin/pendingmeds" className="custom-link">Pending Medicines</Link>
-                    <span className="separator"> | </span>
-                    <Link to="/admin/appointment" className="custom-link">Appointments</Link>
+                    <Link to="/UserPage/appointment" className="custom-link">My Appointments</Link>
                     
                   </div>
            </div>

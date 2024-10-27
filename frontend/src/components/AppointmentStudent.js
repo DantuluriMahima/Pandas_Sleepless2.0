@@ -1,12 +1,50 @@
 import React, { useEffect, useState } from 'react';
 import '../styles/User.css';
 import { Link } from 'react-router-dom';
-import { jwtDecode } from 'jwt-decode';
-
-
+import axios from 'axios';
 const AppointmentStudent = () => {
     const [appointments, setAppointments] = useState([]);
     const [trafficLevel, setTrafficLevel] = useState('Low');
+    const [profile, setProfile] = useState([]);
+    useEffect(() => {
+        const fetchProfile = async () => {
+          try {
+            const token = localStorage.getItem('token');
+            const response = await fetch('http://localhost:5000/api/user/profile', {
+              method: 'GET',
+              headers: {
+                Authorization: `Bearer ${token}`,
+                'Content-Type': 'application/json',
+              },
+            });
+            if (!response.ok) {
+              throw new Error('Failed to fetch profile data');
+            }
+            const profileData = await response.json();
+            setProfile(profileData);
+          } catch (error) {
+            console.error('Error fetching profile:', error.message);
+          }
+        };
+    
+        fetchProfile();
+      }, []);
+      const fetchAppointments = async () => {
+        try {
+            const response = await fetch('http://localhost:5000/api/appointments');
+            const data = await response.json();
+            const userAppointments = data.filter(
+                (appointment) => appointment.roll === profile.roll
+            );
+            setAppointments(userAppointments);
+
+            // Calculate traffic level based on appointments data
+            calculateTrafficLevel(data);
+        } catch (error) {
+            console.error('Error fetching appointments:', error);
+        }
+    };
+
     useEffect(() => {
         // Fetch the appointments from the API
         const fetchAppointments = async () => {
@@ -14,7 +52,7 @@ const AppointmentStudent = () => {
                 const response = await fetch('http://localhost:5000/api/appointments');
                 const data = await response.json();
                 const userAppointments = data.filter(
-                    (appointment) => appointment.roll === userRoll
+                    (appointment) => appointment.roll === profile.roll
                 );
                 setAppointments(userAppointments);
 
@@ -46,16 +84,14 @@ const AppointmentStudent = () => {
             setTrafficLevel('Low');
         }
     };
-    const token = localStorage.getItem('token');
-    const [userRoll, setUserRoll] = useState(null);
-    useEffect(() => {
-        if (token) {
-            const decodedToken = jwtDecode(token);
-
-            setUserRoll(decodedToken.roll); 
-            console.log(userRoll);
+    const handleDelete = async (email, timeSlot) => {
+        try {
+          const response = await axios.delete(`http://localhost:5000/api/${encodeURIComponent(email)}/${encodeURIComponent(timeSlot)}`);
+          fetchAppointments();
+        } catch (error) {
+          console.error('Error deleting item:', error);
         }
-    }, [token]);
+      };
     
     return (
         <section id="userhome">
@@ -63,7 +99,7 @@ const AppointmentStudent = () => {
             <h1>Appointments</h1>
         <nav>
             <ol className="breadcrumb">
-            <li><Link to="/admin/medicine" className="custom-link">Home</Link></li>
+            <li><Link to="/UserPage" className="custom-link">Home</Link></li>
             </ol>
         </nav>
         </div>
@@ -81,6 +117,7 @@ const AppointmentStudent = () => {
                         <th>Doctor Name</th>
                         <th>Date</th>
                         <th>Time Slot</th>
+                        <th>Cancel</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -90,6 +127,15 @@ const AppointmentStudent = () => {
                             <td>{appointment.doctorName}</td>
                             <td>{appointment.date}</td>
                             <td>{appointment.timeSlot}</td>
+                            <td>
+                                      <button
+                                          className="btn btn-danger"
+                                          onClick={() => handleDelete(appointment.email, appointment.timeSlot)}
+                                        >
+                                          Cancel
+                                        </button>
+                                      
+                                    </td> 
                         </tr>
                     ))}
                 </tbody>
