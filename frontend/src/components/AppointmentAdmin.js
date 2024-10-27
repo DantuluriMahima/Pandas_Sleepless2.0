@@ -219,14 +219,24 @@ const Appointment = () => {
             menuAlign="right"
             title={
               <span className="nav-link nav-profile d-flex align-items-center pe-0">
-                <Image
-                  src="/static/adminpage/profile.png"
-                  alt="Profile"
-                  className="rounded-circle me-2"
-                />
-                <span className="d-none d-md-block">
-                  User
-                </span>
+                <button 
+          className="btn d-flex align-items-center" 
+          style={{ 
+            border: 'none', 
+            backgroundColor: 'green', 
+            color: 'white', 
+            borderRadius: '5px', // Make it circular
+            padding: '5px' // Adjust padding as needed
+          }}
+        >
+          <Image
+            src="../../img/profile.png"
+            alt="Profile"
+            className="rounded-circle me-2"
+            style={{ width: '30px', height: '30px' }} // Adjust size of the image
+          />
+          <span className="d-none d-md-block">User</span>
+        </button>
               </span>
             }
             id="dropdown-profile"
@@ -259,7 +269,6 @@ const Appointment = () => {
         </li>
       </ul>
     </nav>
-           <i className="bi bi-list toggle-sidebar-btn"></i>
         </header>
         
         <main id="main" className="main" style={{ height: '100vh', width: '100%' }} >
@@ -274,11 +283,26 @@ const Appointment = () => {
         </div>
         <div>
             <h2>All Booked Appointments</h2>
-            <div>
-                <strong>Traffic Level:</strong> {trafficLevel === 'High' && <span style={{ color: 'red' }}>High Traffic</span>}
-                {trafficLevel === 'Medium' && <span style={{ color: 'orange' }}>Medium Traffic</span>}
-                {trafficLevel === 'Low' && <span style={{ color: 'green' }}>Low Traffic</span>}
-            </div>
+            <div style={{ fontSize: '18px', fontWeight: 'bold', margin: '10px 0' }}>
+  <strong style={{color:'white'}}>Traffic Level:</strong> 
+  {trafficLevel === 'High' && (
+    <span style={{ color: 'red', fontWeight: 'bold', padding: '5px', borderRadius: '5px' }}>
+      High Traffic
+    </span>
+  )}
+  {trafficLevel === 'Medium' && (
+    <span style={{ color: 'orange', fontWeight: 'bold', padding: '5px', borderRadius: '5px' }}>
+      Medium Traffic
+    </span>
+  )}
+  {trafficLevel === 'Low' && (
+    <span style={{ color: 'green', fontWeight: 'bold', padding: '5px', borderRadius: '5px' }}>
+      Low Traffic
+    </span>
+  )}
+</div>
+
+
             <table border="1" style={{ width: '100%', textAlign: 'left' }}>
                 <thead>
                     <tr>

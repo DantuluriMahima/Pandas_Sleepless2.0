@@ -1,7 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap/dist/js/bootstrap.bundle.min.js';
-import 'bootstrap-icons/font/bootstrap-icons.css';
 import { Dropdown, DropdownButton, Badge, Image } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import '../styles/User.css';
@@ -202,21 +199,17 @@ const fetchData = async () => {
     
     
     return (
-        <section id="userhome">
-            <header id="header" className="header fixed-top d-flex align-items-center">
+        <section id='userhome'>
+             <header id="header" className="header fixed-top d-flex align-items-center">
         <div className="container-fluid container-xl d-flex align-items-center justify-content-between" >
-            <div className="logo d-flex align-items-center">
+            <div className="logo d-flex align-items-start">
               <img src="/static/logo.svg.png" alt="IIT Dharwad Logo" />
-              <h1>IIT Dharwad</h1>
+              <h1 style={{ marginLeft: "10px" }}>IIT Dharwad</h1>
             </div>
             <div className="link-container">
-                    <Link to="/admin" className="custom-link">Home</Link>
+                    <Link to="/Userpage" className="custom-link">Home</Link>
                     <span className="separator"> | </span>
-                    <Link to="/admin/medicine" className="custom-link">Medicines</Link>
-                    <span className="separator"> | </span>
-                    <Link to="/admin/pendingmeds" className="custom-link">Pending Medicines</Link>
-                    <span className="separator"> | </span>
-                    <Link to="/admin/appointment" className="custom-link">Appointments</Link>
+                    <Link to="/Userpage/appointment" className="custom-link">Book Appointments</Link>
                     
                   </div>
            </div>
@@ -267,50 +260,20 @@ const fetchData = async () => {
         </li>
       </ul>
     </nav>
-           <i className="bi bi-list toggle-sidebar-btn"></i>
         </header>
         
-            <div className="container">
-                <h2>Book an Appointment</h2>
-                <form id="appointmentForm" onSubmit={handleSubmit}>
-                    <label htmlFor="date">Date:</label>
-                    <select id="date" onChange={handleDateChange} required>
-                        <option value="">Select a Date</option>
-                        {dates.map((date1, index) => (
-                            <option key={index} value={date1}>
-                                {date1}
-                            </option>
-                        ))}
-                    </select>
-                    
-                    <label htmlFor="time">Time:</label>
-                    <select id="time" required>
-                        <option value="">Select a Time Slot</option>
-                        {timeSlots.map((slot, index) => (
-                            <option key={index} value={slot}>
-                                {slot}
-                            </option>
-                        ))}
-                    </select>
-                    
-                    <label htmlFor="doctorId">Doctor:</label>
-                    <select id="doctorId" onChange={handleDoctorChange} required>
-                        <option value="">Select a Doctor</option>
-                        {filteredDoctors.map((doctor, index) => (
-                            <option key={index} value={doctor}>
-                                {doctor}
-                            </option>
-                        ))}
-                    </select>
-                    
-                    <label htmlFor="patientId">Patient Email:</label>
-                    <input type="email" id="patientId" required />
-                    
-                    <button type="submit">Book Appointment</button>
-                </form>
-                <h2>Cancel Medicine</h2>
+        
+        <div class='main' style={{
+        background: 'linear-gradient(rgba(14, 29, 52, 0.86), rgba(14, 29, 52, 0.493))',
+        backgroundPosition: 'center center',
+        backgroundSize: 'cover', // Adjust as needed
+        backgroundRepeat: 'no-repeat' // Adjust as needed
+    }}>
+            <div class="container">
+                
+                <h2 style={{color: 'white'}}>Cancel Medicine</h2>
                 <form id="cancelForm">
-                    <label htmlFor="medicineId">Medicine ID:</label>
+                    <label htmlFor="medicineId" style={{color: 'white'}}>Medicine ID:</label>
                     <input type="text" id="medicineId" required />
                     <button type="submit">Cancel Medicine</button>
                     <a href="https://docs.google.com/spreadsheets/d/1zouIz0bX8YG-UVBTwXXTreddsyR29TTPQL5pczmFKnw/edit?gid=0#gid=0"><em>Sheet link</em></a>
@@ -342,6 +305,7 @@ const fetchData = async () => {
                         ))}
                     </tbody>
                 </table>
+            </div>
             </div>
             <footer id="footer" className="footer" style={{ width: '100%' }}>
 
