@@ -38,7 +38,7 @@
 }
 
 #userhome button {
-    background-color: #4CAF50;
+    background-color: rgba(14, 29, 52, 0.86);
     color: white;
     padding: 10px;
     border: none;
@@ -47,8 +47,9 @@
 }
 
 #userhome button:hover {
-    background-color: #45a049;
+    background-color: rgba(14, 29, 52, 0.86);
 }
+
 #userhome .table-container {
     max-height: 300px; /* Adjust height as needed */
     overflow-y: auto;
@@ -236,3 +237,4 @@
         align-items: center;
     }
 }
+
