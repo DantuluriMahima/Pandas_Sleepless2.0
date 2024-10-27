@@ -13,7 +13,36 @@ const BookAppointment = () => {
     const [filteredDoctors, setFilteredDoctors] = useState([]);
     const [timeSlots, setTimeSlots] = useState([]);
     const [selectedDoctor, setSelectedDoctor] = useState('');
-   
+    const [profile, setProfile] = useState({});
+    useEffect(() => {
+        const fetchProfile = async () => {
+          try {
+            const token = localStorage.getItem('token');
+            const response = await fetch('http://localhost:5000/api/register/profile', {
+              method: 'GET',
+              headers: {
+                Authorization: `Bearer ${token}`,
+                'Content-Type': 'application/json',
+              },
+            });
+            if (!response.ok) {
+              throw new Error('Failed to fetch profile data');
+            }
+            const profileData = await response.json();
+            setProfile(profileData);
+            console.log("hihi", profile, profile.roll);
+
+          } catch (error) {
+            console.error('Error fetching profile:', error.message);
+          }
+        };
+    
+        fetchProfile();
+    }, []);
+    
+    useEffect(() => {
+        console.log("Updated profile state:", profile);
+    }, [profile]);
     useEffect(() => {
         const fetchData = async () => {
            
@@ -159,7 +188,7 @@ const fetchData = async () => {
     const handleSubmit = async (event) => {
         event.preventDefault();
     
-        const email = document.getElementById('patientId').value;
+        const email = profile.email;
         const doctorName = selectedDoctor;
         const date = selectedDate;
         const timeSlot = document.getElementById('time').value;
@@ -337,14 +366,7 @@ const fetchData = async () => {
                 ))}
             </select>
 
-            <label htmlFor="patientId">Patient Email:</label>
-            <input
-                type="email"
-                id="patientId"
-                required
-                style={{ marginBottom: '15px', width: '100%' }}
-            />
-
+            
             <button
                 type="submit"
                 style={{
